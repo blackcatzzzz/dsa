@@ -2,7 +2,7 @@
 
 using namespace std;
 
-// �汾C
+// 版本C
 // [lo, hi)
 int binarySearch_C(int * a, int e, int lo, int hi)
 {
@@ -15,7 +15,7 @@ int binarySearch_C(int * a, int e, int lo, int hi)
 	return --lo;
 }
 
-// �汾B
+// 版本B
 // [lo, hi)
 int binarySearch_B(int * a, int e, int lo, int hi)
 {
@@ -28,7 +28,7 @@ int binarySearch_B(int * a, int e, int lo, int hi)
 	return e == a[lo] ? lo : -1;
 }
 
-// �汾A
+// 版本A
 // [lo, hi)
 int binarySearch_A(int * a, int e, int lo, int hi)
 {
