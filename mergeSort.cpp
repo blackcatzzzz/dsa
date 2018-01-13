@@ -77,12 +77,60 @@ void mergeSort(int * data, int lo, int hi)
 	merge(data, lo, mi, hi);
 }
 
+
+void merge_s(int *a, int *b, int lo, int mi, int hi)
+{
+	int i = lo, j = mi, k = 0;
+
+	while (i < mi && j < hi)
+	{
+		if (a[i] <= a[j])
+			b[k++] = a[i++];
+		else
+			b[k++] = a[j++];
+	}
+
+	while (i < mi)
+		b[k++] = a[i++];
+
+	while (j < hi)
+		b[k++] = a[j++];
+
+	for (size_t i = 0; i < k; i++)
+		a[lo + i] = b[i];
+}
+
+// for interview, simple 版本
+// [lo, hi)
+void mergeSort_s(int *a, int * b, int lo, int hi)
+{
+	if (hi - lo < 2) // 只剩1个元素
+		return;
+
+	int mi = (lo + hi) >> 1;
+	mergeSort_s(a, b, lo, mi);
+	mergeSort_s(a, b, mi, hi);
+	merge_s(a, b, lo, mi, hi);
+
+	return;
+}
+
 int main()
 {
 	int data[] = { 1, 5, 2, 10, 8, 7, 11, 3, 5, 2, 6 };
 	int len = sizeof data / sizeof(int);
-	mergeSort(data, 0, len);
+
 	printArray(data, len);
+
+	//mergeSort(data, 0, len);
+	
+	int *b = new int[len];
+	memset(b, 0x00, len * sizeof(int));
+	mergeSort_s(data, b, 0, len);
+
+	printArray(data, len);
+
+	delete[] b;
 	getchar();
 
 	return 0;
