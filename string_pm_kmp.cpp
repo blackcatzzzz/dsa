@@ -7,10 +7,10 @@
 #include <cstring>
 #include <stdio.h>
 
-// 构建Next表
+// 构造模式串P的next表
 int * buildNext(char * P)
 {
-	int m = strlen(P), j = 0;
+	int m = strlen(P), j = 0; //“主”串指针
 	int * next = new int[m];
 	int t = next[0] = -1;
 
