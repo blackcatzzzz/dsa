@@ -58,6 +58,7 @@ int LIS_DP_N2(vector<int> & a)
 	return max(LIS);
 }
 
+// 返回第一个大于value的位置
 int BinarySearch(int *array, int value, int nLength)
 {
 	int begin = 0;
@@ -126,6 +127,49 @@ int LIS_DP_NLOGN(vector<int> & a)
 	return max(LIS);
 }
 
+// 找出[lo,hi]中，第一个大于e的位置；如果e比a[hi]还大，则返回 hi + 1
+int binnarySearch_uppperBound(vector<int> &a, int lo, int hi, int e)
+{
+	if (e > a[hi])
+		return hi + 1;
+	int i = lo, j = hi;
+	while (i < j)
+	{
+		int mi = (i + j) >> 1;
+
+		if (e < a[mi])
+			j = mi;	// 不能mi - 1,避免丢失，如{1,6,7} 中找 2
+		else if (a[mi] < e)
+			i = mi + 1;
+		else
+			return mi;
+	}
+
+	return i;
+}
+
+// https://www.felix021.com/blog/read.php?1587
+// 最简洁的思路
+int LIS(vector<int> &a)
+{
+	if (a.size() == 0)
+		return 0;
+	vector<int> b(a.size() + 1); // b[i]:长度为i的递增子序列中最大元素的最小值
+	int maxLen = 1;
+	b[maxLen] = a[0];
+
+	int pos = 1;
+	for (size_t i = 1; i < a.size(); i++)
+	{
+		pos = binnarySearch_uppperBound(b, 1, maxLen, a[i]);
+		b[pos] = a[i];
+		if (pos > maxLen)
+			maxLen = pos;
+	}
+	
+	return maxLen;
+}
+
 void printVec(vector<int>& a)
 {
 	for (size_t i = 0; i < a.size(); i++)
@@ -141,7 +185,7 @@ int main()
 	vector<int> array = { 1, -1, 2, -3, 4, -5, 6, -7 };
 	array = { 5,6,7,1,2,3,4,5,5,8};
 	printVec(array);
-	printf("LIS: %d", LIS_DP_NLOGN(array));
+	printf("LIS: %d", LIS(array));
 
 	getchar();
 	return 0;
