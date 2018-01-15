@@ -63,7 +63,7 @@ public class BinTree {
         arrayList.add(root.val);
     }
 
-    // 前序遍历递归版本
+    // 前序遍历，迭代版本
     public static void travPre(BinNode root){
         if (root == null)
             return;
@@ -81,7 +81,7 @@ public class BinTree {
         }
     }
 
-    // 中序遍历，递归版本
+    // 中序遍历，迭代版本
     public static void travIn(BinNode x){
         if(x == null)
             return;
@@ -101,6 +101,50 @@ public class BinTree {
             x = x.right;
         }
 
+    }
+
+
+    /**
+     * 判断p是否x的父亲节点
+     * @param p
+     * @param x
+     * @return
+     */
+    public static boolean isParent(BinNode p, BinNode x){
+        return p.left == x || p.right == x;
+    }
+
+    // 后序遍历 迭代版
+    public static void travPost(BinNode x){
+        if(x == null)
+            return;
+        Stack<BinNode> stack = new Stack<BinNode>();
+        stack.push(x);
+
+        while (!stack.empty()){
+            if (!isParent(stack.peek(), x)){    // 当前栈顶元素不是父亲节点，则为根节点或必存在右兄弟节点
+                x = stack.peek();
+                while(true){
+                    if (x.left != null){
+                        if (x.right != null)
+                            stack.push(x.right);
+                        stack.push(x.left);
+                        x = x.left;
+                    }
+                    else if (x.right != null)
+                    {
+                        stack.push(x.right);
+                        x = x.right;
+                    }
+                    else
+                        break;
+                }
+            }
+
+            x = stack.pop();
+            System.out.print(x.val + " ");
+
+        } // while
     }
 
     public static void travLevel(BinNode root){
@@ -193,6 +237,10 @@ public class BinTree {
 
         System.out.print("travPost_R: ");
         printArray(travPost_R(root).toArray());
+
+        System.out.print("travPost: \t");
+        travPost(root);
+        System.out.println();
 
         BinNode reConBinTree = reConstructBinaryTree(travPre_R(root).stream().mapToInt(i->i).toArray(), travIn_R(root).stream().mapToInt(i->i).toArray());
         System.out.print("travLevel(reConstrucet): ");
