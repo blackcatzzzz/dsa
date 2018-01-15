@@ -81,10 +81,26 @@ public class BinTree {
         }
     }
 
-    public static void travIn(BinNode root){
-        if(root == null)
+    // 中序遍历，递归版本
+    public static void travIn(BinNode x){
+        if(x == null)
             return;
-        
+        Stack<BinNode> stack = new Stack<BinNode>();
+        while(true){
+            while (x != null)
+            {
+                stack.push(x);
+                x = x.left;
+            }
+
+            if (stack.empty())
+                break;
+            
+            x = stack.pop();
+            System.out.print( x.val + " ");
+            x = x.right;
+        }
+
     }
 
     public static void travLevel(BinNode root){
@@ -170,6 +186,10 @@ public class BinTree {
 
         System.out.print("travIn_R: \t");
         printArray(travIn_R(root).toArray());
+
+        System.out.print("travIn: \t");
+        travIn(root);
+        System.out.println();
 
         System.out.print("travPost_R: ");
         printArray(travPost_R(root).toArray());
