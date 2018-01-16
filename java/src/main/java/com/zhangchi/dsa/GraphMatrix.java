@@ -138,6 +138,44 @@ public class GraphMatrix{
         }
     }
 
+    /**
+     * 拓扑排序（全图） topological sort
+     * @return 拓扑排序结果，依次取出栈顶元素即可;如果为空，表示不能拓扑排序（有环）
+     */
+    public Stack<Object> tSort(){
+        reset();
+        Stack<Object> S = new Stack<Object>();
+        for(int i = 0; i < numV; ++i){
+            if (!visited[i]){
+                if (!TSort(i, S)){
+                    while (!S.isEmpty())
+                        S.pop();
+                    break;
+                }
+            }
+
+        }
+
+        return S;
+    }
+
+    /**
+     * 拓扑排序（单个连通域） topological sort
+     * @param v
+     * @return 是否DAG（有向无环图）
+     */
+    public boolean TSort(int v, Stack<Object> S){
+        visited[v] = true;
+        for (int u = firstAdjV(v); u != -1; u = nextAdjV(v, u)){
+            if (!visited[u])
+                TSort(u, S);
+        }
+
+        S.push(V[v]);
+
+        return true;
+    }
+
 
     // 顶点v的首个邻接顶点
     private int firstAdjV(int i){
@@ -208,6 +246,12 @@ public class GraphMatrix{
 
         System.out.print("bfs: ");
         gm.bfs();
+        System.out.println();
+
+        System.out.print("tSort: ");
+        Stack<Object> S = gm.tSort();
+        while(!S.isEmpty())
+            System.out.print(S.pop() + " ");
         System.out.println();
     }
 }
