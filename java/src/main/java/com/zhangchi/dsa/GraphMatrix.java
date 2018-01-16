@@ -176,12 +176,22 @@ public class GraphMatrix{
         return true;
     }
 
-    // 最小支撑树MST(minimun spanning tree),不一定唯一
+    /**
+     * 最小支撑树MST(minimun spanning tree),不一定唯一
+     * prim算法思想：
+     * 1）遍历每个顶点,将第一个顶点作为s(s为当前权重最小的顶点)
+     * 2）将权重weight最小顶点s纳入支撑树中，顶点状态置为visited；
+     * 3）遍历s的所有邻接顶点j，if(!visited[j] && weight(j) > weight(s,j)) weight(j) = weight(s,j)
+     * 4) 遍历所有顶点，选出当前权重最小的顶点j, s = j
+     * 5）继续2）
+     */
 
     /**
-     * prim算法思想：
-     * 1）遍历每个顶点
+     * 最短路径
+     * Dijkstra算法思想：
      *
+     * 总体算法框架与prim算法相同，只是步骤3）中权重的判断改为
+     * if(!visited[j] && weight(j) > (weight(s) + weight(s,j))) weight(j) = weight(s) + weight(s,j))
      *
      */
 
