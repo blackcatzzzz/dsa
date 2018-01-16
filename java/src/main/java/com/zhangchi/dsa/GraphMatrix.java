@@ -176,6 +176,15 @@ public class GraphMatrix{
         return true;
     }
 
+    // 最小支撑树MST(minimun spanning tree),不一定唯一
+
+    /**
+     * prim算法思想：
+     * 1）遍历每个顶点
+     *
+     *
+     */
+
 
     // 顶点v的首个邻接顶点
     private int firstAdjV(int i){
