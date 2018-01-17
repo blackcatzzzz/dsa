@@ -274,7 +274,3 @@ public class GraphMatrix{
         System.out.println();
     }
 }
-
-//class Vertex<Tv>{
-//
-//}
