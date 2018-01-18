@@ -11,6 +11,44 @@ public class JavaContainer {
         //i = 1;
     }
 
+    public static void testHashMap(){
+        HashMap<String, String> map = new HashMap<>();
+        map.put("1", "1");
+        map.put("2", "2");
+
+        // 错误删除方法
+// 		java.util.ConcurrentModificationException
+//		at java.util.HashMap$HashIterator.nextNode(HashMap.java:1437)
+//		at java.util.HashMap$EntryIterator.next(HashMap.java:1471)
+//		at java.util.HashMap$EntryIterator.next(HashMap.java:1469)
+//		for (Map.Entry<String, String> entry: map.entrySet()){
+//			map.remove(entry.getKey());
+//		}
+
+        Iterator<String> itKey = map.keySet().iterator();
+        while (itKey.hasNext()){
+            System.out.println("Key: " + itKey);
+        }
+
+        Iterator<String> itValue = map.values().iterator();
+        while (itValue.hasNext()){
+            System.out.println("Value: " + itValue);
+        }
+
+
+        // 正确删除
+        for (Iterator<Map.Entry<String, String>> it = map.entrySet().iterator(); it.hasNext();){
+            Map.Entry<String, String> entry = it.next();
+            it.remove();
+            System.out.println(entry.getKey() + "," + entry.getValue());
+        }
+
+        for (Iterator<Map.Entry<String, String>> it = map.entrySet().iterator(); it.hasNext();){
+            Map.Entry<String, String> entry = it.next();
+            System.out.println(entry.getKey() + "," + entry.getValue());
+        }
+    }
+
     public static void main(String[] args){
         LinkedList<Integer> linkedList = new LinkedList<>();
         linkedList.add(1);
@@ -35,10 +73,8 @@ public class JavaContainer {
                 list.remove(s);
             }
         }
-        //HashMap
-        //Collection;
-        //Stack;
-        //Queue;
+
+        testHashMap();
     }
 }
 
