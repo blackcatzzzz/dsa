@@ -12,6 +12,16 @@ import java.util.Stack;
  */
 public class BinTree {
 
+    private static class BinNode{
+        int val;
+        BinNode left;
+        BinNode right;
+
+        BinNode(int val){
+            this.val = val;
+        }
+    }
+
     public static ArrayList<Integer> travPre_R(BinNode root){
         ArrayList<Integer> arrayList = new ArrayList<Integer>();
         if (root == null)
@@ -247,27 +257,3 @@ public class BinTree {
         travLevel(reConBinTree);
     }
 }
-
-class BinNode{
-    int val;
-    BinNode left;
-    BinNode right;
-
-    BinNode(int val){
-        this.val = val;
-    }
-}
-
-//interface BinTreeCallback{
-//    void getTravSequence(Integer val);
-//}
-//
-//class BinTreeVisit implements BinTreeCallback{
-//    private ArrayList<Integer> travSequence = new ArrayList<Integer>();
-//
-//    @Override
-//    public void getTravSequence(Integer val) {
-//        travSequence.add(val);
-//        return null;
-//    }
-//}

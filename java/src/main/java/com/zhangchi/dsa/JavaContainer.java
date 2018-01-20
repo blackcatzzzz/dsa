@@ -2,6 +2,7 @@ package com.zhangchi.dsa;
 
 
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class JavaContainer {
 
@@ -34,7 +35,6 @@ public class JavaContainer {
         while (itValue.hasNext()){
             System.out.println("Value: " + itValue);
         }
-
 
         // 正确删除
         for (Iterator<Map.Entry<String, String>> it = map.entrySet().iterator(); it.hasNext();){
