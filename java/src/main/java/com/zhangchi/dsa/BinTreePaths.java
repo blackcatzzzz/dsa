@@ -29,47 +29,47 @@ import java.util.List;
 public class BinTreePaths {
 
     private static class TreeNode {
-            int val;
-            TreeNode left;
-            TreeNode right;
-            TreeNode(int x) { val = x; }
-        }
+        int val;
+        TreeNode left;
+        TreeNode right;
+        TreeNode(int x) { val = x; }
+    }
 
-        public List<String> binaryTreePaths(TreeNode root) {
-            List<String> allPaths = new ArrayList<String>();
-            if(root == null)
-                return allPaths;
-            binaryTreePathsCore(root, allPaths, new StringBuilder());
+    public List<String> binaryTreePaths(TreeNode root) {
+        List<String> allPaths = new ArrayList<String>();
+        if(root == null)
             return allPaths;
+        binaryTreePathsCore(root, allPaths, new StringBuilder());
+        return allPaths;
+    }
+
+    private void binaryTreePathsCore(TreeNode x, List<String> allPaths, StringBuilder sb){
+        if (x == null)
+            return;
+
+        int len = sb.length();
+        sb.append(x.val);
+
+        if (x.left == null && x.right == null)
+            allPaths.add(sb.toString());
+        else{
+            sb.append("->");
+            if (x.left != null)
+                binaryTreePathsCore(x.left, allPaths, sb);
+            if (x.right != null)
+                binaryTreePathsCore(x.right, allPaths, sb);
         }
 
-        private void binaryTreePathsCore(TreeNode x, List<String> allPaths, StringBuilder sb){
-            if (x == null)
-                return;
+        sb.setLength(len);
+    }
 
-            int len = sb.length();
-            sb.append(x.val);
+    public static void main(String[] args) {
+        TreeNode root = new TreeNode(1);
+        root.left = new TreeNode(2);
+        root.right = new TreeNode(3);
+        root.left.right = new TreeNode(5);
 
-            if (x.left == null && x.right == null)
-                allPaths.add(sb.toString());
-            else{
-                sb.append("->");
-                if (x.left != null)
-                    binaryTreePathsCore(x.left, allPaths, sb);
-                if (x.right != null)
-                    binaryTreePathsCore(x.right, allPaths, sb);
-            }
-
-            sb.setLength(len);
-        }
-
-        public static void main(String[] args) {
-            TreeNode root = new TreeNode(1);
-            root.left = new TreeNode(2);
-            root.right = new TreeNode(3);
-            root.left.right = new TreeNode(5);
-
-            BinTreePaths bintreePath = new BinTreePaths();
-            List<String> allPaths = bintreePath.binaryTreePaths(root);
-        }
+        BinTreePaths bintreePath = new BinTreePaths();
+        List<String> allPaths = bintreePath.binaryTreePaths(root);
+    }
 }
