@@ -21,6 +21,9 @@ import java.util.List;
  * All root-to-leaf paths are:
  *
  * ["1->2->5", "1->3"]
+ *
+ * @author Chi Zhang
+ * @date 2018/18
  */
 
 public class BinTreePaths {

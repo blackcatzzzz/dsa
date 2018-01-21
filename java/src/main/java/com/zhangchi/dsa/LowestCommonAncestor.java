@@ -23,7 +23,7 @@ import java.util.ArrayList;
  * For example, the lowest common ancestor (LCA) of nodes 5 and 1 is 3. Another example is LCA of nodes 5 and 4 is 5, since a
  * node can be a descendant of itself according to the LCA definition.
  *
- * @author zhangchi
+ * @author Chi Zhang
  * @date 2018/1/20
  *
  */

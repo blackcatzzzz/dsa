@@ -7,7 +7,7 @@ import java.util.Queue;
 import java.util.Stack;
 
 /**
- * @auther zhangchi
+ * @author Chi Zhang
  * @date 2018/1/15
  */
 public class BinTree {
