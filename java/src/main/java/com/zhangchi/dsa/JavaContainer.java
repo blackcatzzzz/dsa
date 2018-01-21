@@ -1,12 +1,7 @@
 package com.zhangchi.dsa;
 
 
-import java.util.HashMap;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Arrays;
+import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class JavaContainer {
