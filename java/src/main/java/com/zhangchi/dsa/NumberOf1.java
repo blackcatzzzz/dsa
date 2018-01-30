@@ -10,8 +10,8 @@ public class NumberOf1 {
      */
     public static int numberOf1(int n){
         int count = 0;
-        while (n > 0){
-            if ((n & 1) > 0)
+        while (n != 0){
+            if ((n & 1) != 0)
                 count++;
             n = n >>> 1;
         }
@@ -26,8 +26,8 @@ public class NumberOf1 {
     public static int numberOf1_mask(int n){
         int count = 0;
         int mask = 1;
-        while(mask > 0){
-            if((n & mask) > 0)
+        while(mask != 0){
+            if((n & mask) != 0)
                 ++count;
             mask = mask << 1;
         }
@@ -42,7 +42,7 @@ public class NumberOf1 {
      */
     public static int numberOf1_best(int n){
         int count = 0;
-        while(n > 0){
+        while(n != 0){
             ++count;
             n = n & (n -1);
         }
