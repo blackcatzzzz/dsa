@@ -66,7 +66,7 @@ public class StringToInt {
         String s2 = "2147483648"; // 溢出
         String s3 = "-2147483648";
         String s4 = "-2147483649"; // 溢出
-        String s5 = "-1234"; // 溢出
+        String s5 = "-1234";
         int max = Integer.MAX_VALUE; // 2147483647
         int min = Integer.MIN_VALUE; // -2147483648
         System.out.println("Integer.MAX_VALUEL: " + max);
