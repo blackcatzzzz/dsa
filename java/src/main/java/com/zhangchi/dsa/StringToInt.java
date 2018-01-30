@@ -55,6 +55,9 @@ public class StringToInt {
             throw new MyException("字符串长度为0！");
         }
 
+        if(negative)
+            result = -result; //  -2147483648 乘以 -1还是会自动处理为 -2147483648
+
         return result;
     }
 
@@ -63,13 +66,14 @@ public class StringToInt {
         String s2 = "2147483648"; // 溢出
         String s3 = "-2147483648";
         String s4 = "-2147483649"; // 溢出
+        String s5 = "-1234"; // 溢出
         int max = Integer.MAX_VALUE; // 2147483647
         int min = Integer.MIN_VALUE; // -2147483648
         System.out.println("Integer.MAX_VALUEL: " + max);
         System.out.println("Integer.MIN_VALUE: " + min);
 
         try{
-            System.out.println("parseInt(" + s4 + "): " + StringToInt.parseInt(s4));
+            System.out.println("parseInt(" + s3 + "): " + StringToInt.parseInt(s3));
         }catch (MyException e){
             System.out.println(e.getMessage());
         }
