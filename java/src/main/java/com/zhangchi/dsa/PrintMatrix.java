@@ -3,6 +3,11 @@ package com.zhangchi.dsa;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+/**
+ * 顺时针打印矩阵
+ * @author Chi Zhang
+ * @date 2018/1/30
+ */
 public class PrintMatrix {
 
     public ArrayList<Integer> printMatrix(int [][] matrix) {
