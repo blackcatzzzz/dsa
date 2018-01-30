@@ -4,6 +4,8 @@ import java.util.Stack;
 
 /**
  * 用栈实现队列
+ * @author Chi Zhang
+ * @date 2018/1/30
  */
 public class StackImpQueue {
 

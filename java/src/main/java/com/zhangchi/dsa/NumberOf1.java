@@ -1,6 +1,10 @@
 package com.zhangchi.dsa;
 
-
+/**
+ * 数字中二进制1的个数
+ * @author Chi Zhang
+ * @date 2018/1/30
+ */
 public class NumberOf1 {
 
     /**
