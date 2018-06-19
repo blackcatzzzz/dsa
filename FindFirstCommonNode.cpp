@@ -2,11 +2,15 @@
 
 using namespace std;
 
+/*
+* 输入两个链表，找出它们的第一个公共结点。
+*/
+
 struct ListNode {
 	int val;
 	struct ListNode *next;
 	ListNode(int x) :
-	val(x), next(NULL) {
+		val(x), next(NULL) {
 	}
 };
 
