@@ -35,6 +35,7 @@ public:
 	}
 
 private:
+	// 使用前序遍历
 	void serialize(TreeNode* root, ostringstream& out)
 	{
 		if (root)
