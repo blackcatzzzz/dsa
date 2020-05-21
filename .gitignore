@@ -1,0 +1,7 @@
+.vs/
+CppProperties.json
+*/.vscode/
+*.obj
+*.pdb
+*.idea/
+*.iml
