@@ -5,3 +5,4 @@ CppProperties.json
 *.pdb
 *.idea/
 *.iml
+*/debug/
