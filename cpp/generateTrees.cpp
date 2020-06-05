@@ -83,9 +83,104 @@ public:
     }
 };
 
+// 参考: https://leetcode.com/problems/unique-binary-search-trees-ii/discuss/31493/Java-Solution-with-DP
+// DP offset
+class Solution1 {
+public:
+    vector<TreeNode*> generateTrees(int n) {
+        // dp[len] 长度为len的生成树
+        vector<vector<TreeNode*>> dp(n + 1, vector<TreeNode*>());
+        if(n <= 0)
+            return dp[0];
+
+        dp[0].push_back(nullptr);
+        // 长度从1到n
+        for(int len = 1; len <= n; len++){
+            for(int i = 1; i <= len; i++){
+                vector<TreeNode*> leftTrees = dp[i - 1];
+                vector<TreeNode*> rightTrees = dp[len - i];
+                for(auto leftTree: leftTrees){
+                    for(auto rightTree: rightTrees){
+                        TreeNode* root = new TreeNode(i);
+                        root->left = leftTree;
+                        root->right = clone(rightTree, i);
+                        dp[len].push_back(root);
+                    }
+                }
+            }
+        }
+        return dp[n];
+    }
+
+    TreeNode* clone(TreeNode* node, int offset){
+        if(!node)
+            return nullptr;
+        TreeNode* root = new TreeNode(node->val + offset);
+        root->left = clone(node->left, offset);
+        root->right = clone(node->right, offset);
+        return root;
+    }
+};
+
+// 参考: https://leetcode.wang/leetCode-95-Unique-Binary-Search-TreesII.html
+// 常规DP
+class Solution2 {
+public:
+    vector<TreeNode*> generateTrees(int n) {
+        vector<TreeNode*> vecPre;
+        if(n <= 0)
+            return vecPre;
+
+        vecPre.push_back(nullptr);
+        for(int i = 1; i <= n; i++){
+            vector<TreeNode*> vecCur;
+            for(auto x:vecPre){
+                // 插入根节点
+                TreeNode* insert = new TreeNode(i);
+                insert->left = x;
+                vecCur.push_back(insert);
+
+                //插入到右孩子，右孩子的右孩子...最多找 n 次孩子
+                for (int j = 0; j <= n; j++) {
+                    TreeNode* tmpRoot = treeCopy(x);
+                    TreeNode* right = tmpRoot;    // 待插入的节点的位置（即要插入该节点的右孩子）
+                    
+                    int k = j;
+                    while(k-- > 0 && right){
+                        right = right->right;
+                    }
+
+                    if(!right)
+                        break;
+                    
+                    //保存当前右孩子的位置的子树作为插入节点的左孩子
+                    TreeNode* tmpRight = right->right;
+                    TreeNode* insert = new TreeNode(i);
+                    right->right = insert;
+                    insert->left = tmpRight;
+                    vecCur.push_back(tmpRoot);
+                }
+            }
+
+            vecPre = vecCur;
+        }
+
+        return vecPre;
+    }
+
+    TreeNode* treeCopy(TreeNode* root){
+        if(!root)
+            return root;
+        TreeNode* newRoot = new TreeNode(root->val);
+        newRoot->left = treeCopy(root->left);
+        newRoot->right = treeCopy(root->right);
+        return newRoot;
+    }
+};
+
 int main(){
-    Solution s;
-    vector<TreeNode*> res = s.generateTrees(0);
+    Solution2 s;
+    vector<TreeNode*> res = s.generateTrees(3);
     for(TreeNode* n :res){
         if(!n)
             continue;
