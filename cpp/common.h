@@ -19,9 +19,9 @@ struct TreeNode {
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  };
 
-
- void printVector(vector<int>& arr){
-    for(int a : arr)
+template<typename T>
+ void printVector(vector<T>& arr){
+    for(T a : arr)
         cout << a << " ";
     cout << endl;
  }
