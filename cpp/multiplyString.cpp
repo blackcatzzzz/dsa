@@ -49,6 +49,7 @@ public:
         while(i < res.size() && res[i] == 0)
             i++;
         
+        // 将计算结果转化成字符串
         string str;
         for(;i < res.size(); i++)
             str.push_back('0' + res[i]);
