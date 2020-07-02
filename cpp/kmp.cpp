@@ -26,6 +26,7 @@ For the purpose of this problem, we will return 0 when needle is an empty string
 
 #include "common.h"
 
+// 二维DP
 class KMP {
 public:
     KMP(const string& pat): dp(pat.size(), vector<int>(256, 0)){
@@ -69,6 +70,7 @@ private:
     vector<vector<int>> dp;
 };
 
+// 暴力
 class Solution_F{
 public:
     int search(const string& text, const string& pat){
@@ -87,7 +89,8 @@ public:
 };
 
 
-class Solution {
+// leetcode 二维dp solution
+class Solution_DP {
 public:
     int strStr(string haystack, string needle) {
         int M = needle.size();
@@ -132,6 +135,79 @@ public:
 
 };
 
+// leetcode 一维next solution
+class Solution {
+public:
+    int strStr(string haystack, string needle) {
+        int M = needle.size();
+        if(M == 0) return 0;
+
+        // 构建next, next[i] 表示 模式串p中 p[0...i] 子串的前缀与后缀的最大匹配长度
+        vector<int> next(M, 0); 
+        buildNext(needle, next);
+
+        return search(haystack, needle, next);       
+    }
+
+    int search(const string& s, const string& p, vector<int>& next){
+        int N = s.size();
+        int M = p.size();
+        int i = 0; // i 表示主串s待匹配的位置
+        int j = 0; // j 表示模式串p待匹配的位置
+        // while(i < N){
+        //     if(s[i] == p[j]){
+        //         i++;
+        //         j++;
+        //     }else if(j > 0 && next[j - 1]){     // 失配了，根据next移动模式串（即前缀与后缀的最大匹配长度）
+        //         j = next[j - 1];
+        //     }else if(j > 0){                   // 失配且next[j-1] == 0， 直接移动模式串到p[0]
+        //         j = 0;
+        //     }else{
+        //         i++;                            // 在p[0]处失配，直接移动主串
+        //     }
+
+        //     if(j == M) return i - M;    // 匹配成功
+        // }
+
+        // 合并上面注释的逻辑，主要是j > 0 && next[j - 1]这里
+        while(i < N){
+            if(s[i] == p[j]){
+                i++;
+                j++;
+            }else if(j){                    // 失配了，根据next移动模式串（即前缀与后缀的最大匹配长度）
+                j = next[j - 1];
+            }else{                          // 在p[0]处失配，直接移动主串
+                i++;                            
+            }
+
+            if(j == M) return i - M;    // 匹配成功
+        }
+
+        return -1;
+    }
+
+    void buildNext(const string& p, vector<int>& next){
+        int M = p.size();
+        // base case
+        next[0] = 0;
+
+        int now = 0, x = 1; // now为当前从1开始算,可以理解now = next[x-1], 扩展时next[x] = next[x-1] + 1
+        while(x < M){
+            if(p[x] == p[now]){  // 如果p[x] == p[now],向右扩展一回
+                now += 1;
+                next[x] = now;
+                x += 1;
+            }else if(now){      // 缩小now, 回退，重启状态
+                now = next[now - 1];
+            }else{              // now缩小为0, 无法回退
+                next[x] = 0;
+                x += 1;
+            }
+        }
+    }
+
+};
+
 void test_SF(){
     cout << "test SF " << endl;
     string pat = "ababc";
@@ -140,6 +216,15 @@ void test_SF(){
 
     Solution_F SF;
     cout << SF.search(text, pat) << endl;
+}
+
+void test_S(){
+    cout << "test S " << endl;
+    string pat = "ababc";
+    string text = "abaababc";
+
+    Solution S;
+    cout << S.strStr(text, pat) << endl;    
 }
 
 int main(){
@@ -151,6 +236,8 @@ int main(){
 
     test_SF();
 
-    Solution S;
-    cout << S.strStr(text, pat) << endl;
+    // Solution_DP S;
+    // cout << S.strStr(text, pat) << endl;
+
+    test_S();
 }
