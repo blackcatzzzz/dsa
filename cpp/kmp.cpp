@@ -186,6 +186,7 @@ public:
         return -1;
     }
 
+    // 发现buildNext与search代码很类似，其实 buildNext相当于 模式串自己与自己的前缀进行匹配， 即x相当于i, now相当于j 
     void buildNext(const string& p, vector<int>& next){
         int M = p.size();
         // base case
