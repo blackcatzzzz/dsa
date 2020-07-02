@@ -136,6 +136,7 @@ public:
 };
 
 // leetcode 一维next solution
+// https://www.zhihu.com/question/21923021/answer/1032665486
 class Solution {
 public:
     int strStr(string haystack, string needle) {
