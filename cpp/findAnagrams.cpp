@@ -78,8 +78,8 @@ public:
 int main(){
     Solution S;
     string s = "cbaebabacd", p ="abc";
-    printVector(S.findAnagrams(s, p));
+    S.findAnagrams(s, p);
 
     s = "abab", p ="ab";
-    printVector(S.findAnagrams(s, p));
+    S.findAnagrams(s, p);
 }
