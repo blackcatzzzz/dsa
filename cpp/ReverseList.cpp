@@ -30,7 +30,29 @@ public:
 	}
 };
 
+class Solution_Recursion {
+public:
+	ListNode* ReverseList(ListNode* pHead) {
+		if (!pHead || !pHead->next) return pHead;
+		ListNode* last = ReverseList(pHead->next);
+		pHead->next->next = pHead;
+		pHead->next = NULL;
+
+		return last;
+	}	
+};
+
 int main()
 {
+	ListNode* cur = nullptr;
+	ListNode* head = cur = new ListNode(1);
+	cur = cur->next = new ListNode(2);
+	cur = cur->next = new ListNode(3);
+	printList(head);
+
+	Solution_Recursion SR;
+	ListNode* reverseHead = SR.ReverseList(head);
+	printList(reverseHead);
+
 	return 0;
 }
