@@ -31,6 +31,30 @@ P     I
 class Solution {
 public:
     string convert(string s, int numRows) {
-        
+        if(numRows <= 0) return "";
+        if(numRows == 1) return s;
+
+        vector<string> rows(min(int(s.length()), numRows));
+        int curRow = 0;
+        bool goingDown = false;
+        for(int i = 0; i < s.size(); i++){
+            rows[curRow] += s[i];
+            if(curRow == 0 || curRow == numRows - 1)
+                goingDown = !goingDown;
+            curRow = goingDown ? curRow + 1 : curRow - 1;
+        }
+
+        string res;
+        for(auto row : rows) 
+            res += row;
+
+        return res;
     }
 };
+
+int main(){
+    string s = "PAYPALISHIRING";
+    int numRows = 4;
+    Solution S;
+    cout << S.convert(s, numRows) << endl;
+}
