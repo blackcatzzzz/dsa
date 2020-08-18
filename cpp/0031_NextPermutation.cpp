@@ -18,6 +18,40 @@ Here are some examples. Inputs are in the left-hand column and its corresponding
 class Solution {
 public:
     void nextPermutation(vector<int>& nums) {
+        int i = nums.size() - 2;
+        while (i >= 0 && nums[i] >= nums[i + 1]){
+            i--;
+        }
         
+        if(i == -1){
+            reverse(nums, 0, nums.size() - 1);
+            return;
+        }
+
+        int j = nums.size() - 1;
+        while(j > i){
+            if(nums[j] > nums[i])
+                break;
+            j--;
+        }
+
+        swap(nums[i], nums[j]);
+        reverse(nums, i + 1, nums.size() - 1);
+        return;
+    }
+
+    void reverse(vector<int>& nums, int i, int j){
+        while(i < j){
+            swap(nums[i], nums[j]);
+            i++;
+            j--;
+        }
     }
 };
+
+int main(){
+    Solution S;
+    vector<int> nums{1, 5, 8, 7, 3, 2};
+    S.nextPermutation(nums);
+    printVector(nums);
+}
