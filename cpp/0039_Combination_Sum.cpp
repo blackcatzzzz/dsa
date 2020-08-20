@@ -40,6 +40,34 @@ Each element of candidate is unique.
 class Solution {
 public:
     vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
-
+        sort(candidates.begin(), candidates.end());
+        dfs(candidates, 0, target);
+        return res;
     }
+
+private:
+    void dfs(vector<int>& candidates, int start, int target){
+        if(target == 0)
+            res.push_back(path);
+        
+        for(int i = start; i < candidates.size(); i++){
+            if(target - candidates[i] < 0)
+                break;
+
+            path.push_back(candidates[i]);
+            dfs(candidates, i, target - candidates[i]);
+            path.pop_back();
+        }
+    }
+
+private:
+    vector<vector<int>> res;
+    vector<int> path;
 };
+
+int main(){
+    Solution S;
+    vector<int> nums{2,3,6,7};
+    vector<vector<int>> res = S.combinationSum(nums, 7);
+    getchar();
+}
