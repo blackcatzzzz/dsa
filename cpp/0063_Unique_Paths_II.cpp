@@ -33,6 +33,35 @@ There are two ways to reach the bottom-right corner:
 class Solution {
 public:
     int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) {
+        int n = obstacleGrid.size(), m = obstacleGrid[0].size();
+        vector<vector<int>> dp(n, vector<int>(m, 0));
+        for(int i = 0; i < n && !obstacleGrid[i][0]; i++)
+            dp[i][0] = obstacleGrid[i][0] ? 0 : 1;
 
+        for(int j = 0; j < m && !obstacleGrid[0][j]; j++)
+            dp[0][j] = 1;
+
+        for(int i = 1; i < n; i++){
+            for(int j = 1; j < m; j++){
+                if(obstacleGrid[i][j])
+                    continue;
+                dp[i][j] = (obstacleGrid[i - 1][j] ? 0 : dp[i - 1][j]) + (obstacleGrid[i][j - 1] ? 0 : dp[i][j - 1]);
+            }
+        }
+
+        return dp[n - 1][m - 1];
     }
 };
+
+int main(){
+    vector<vector<int>> obstacleGrid = {
+        {0,0,0},
+        {0,1,0},
+        {0,0,0}
+    };
+
+    obstacleGrid = {{0,0},{0,1}};
+
+    Solution S;
+    cout << S.uniquePathsWithObstacles(obstacleGrid);
+}

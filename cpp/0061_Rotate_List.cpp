@@ -33,6 +33,41 @@ rotate 4 steps to the right: 2->0->1->NULL
 class Solution {
 public:
     ListNode* rotateRight(ListNode* head, int k) {
-        
+        if(!head || !k) 
+            return head;
+
+        ListNode* dummy = new ListNode(-1);
+        dummy->next = head;
+        ListNode * cur = dummy;
+        int len = 0;
+        while(cur->next){
+            len++;
+            cur = cur->next;
+        }
+
+        ListNode* tail = cur;
+
+        int step = k % len;
+        if(step == 0)
+            return head;
+
+        step = len - step - 1;
+        ListNode* newTail = head;
+        while(step--)
+            newTail = newTail->next;
+
+        ListNode* newHead = newTail->next;
+        newTail->next = nullptr;
+        tail->next = head;
+
+        return newHead;
     }
 };
+
+int main(){
+    ListNode* head = new ListNode(0);
+    ListNode* cur = head->next = new ListNode(1);
+    cur = cur->next = new ListNode(2);
+    Solution S;
+    printList(S.rotateRight(head, 2));
+}
