@@ -35,10 +35,35 @@ Constraints:
 class Solution {
 public:
     vector<vector<int>> combine(int n, int k) {
-
+        this->n = n;
+        this->k = k;
+        dfs(1);
+        return res;
     }
+
+private:
+    void dfs(int start){
+        if(path.size() == k){
+            res.push_back(path);
+            return;
+        }
+
+        // 剪枝
+        for(int i = start; i <= n - (k - path.size()) + 1; i++){
+            path.push_back(i);
+            dfs(i + 1);
+            path.pop_back();
+        }
+    }
+
+private:
+    vector<vector<int>> res;
+    vector<int> path;
+    int n;
+    int k;
 };
 
 int main(){
-
+    Solution S;
+    printVectors(S.combine(4, 2));
 }
