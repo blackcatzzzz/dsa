@@ -26,6 +26,32 @@ Each string is either "0" or doesn't contain any leading zero.
 class Solution {
 public:
     string addBinary(string a, string b) {
-        
+        int len_a = a.size();
+        int len_b = b.size();
+        int len = len_a > len_b ?  len_a : len_b;
+        string res;
+        int i = 1;
+        int carry = 0;
+        while(i <= len_a || i <= len_b){
+            char a_c = i <= len_a ? a[len_a - i] : '0';
+            char b_c = i <= len_b ? b[len_b - i] : '0';
+            int sum = (a_c - '0') + (b_c - '0') + carry;
+            res.push_back(sum % 2 + '0');
+            carry = sum / 2;
+            i++;
+        }
+
+        if(carry)
+            res.push_back('1');
+
+        reverse(res.begin(), res.end());
+
+        return res;
     }
 };
+
+int main(){
+    Solution S;
+    string a = "1010", b = "1011";
+    cout << S.addBinary(a, b);
+}

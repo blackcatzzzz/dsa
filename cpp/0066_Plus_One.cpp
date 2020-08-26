@@ -36,6 +36,22 @@ Constraints:
 class Solution {
 public:
     vector<int> plusOne(vector<int>& digits) {
-
+        vector<int> res(digits.size() + 1, 0);
+        for(int i = digits.size() - 1; i >= 0; i--){
+            digits[i]++;
+            if(digits[i] == 10) 
+                digits[i] = 0;
+            else
+                return digits;
+        }
+        
+        digits.insert(digits.begin(), 1);
+        return digits;
     }
 };
+
+int main(){
+    Solution S;
+    vector<int> digits = {1,2,3};
+    printVector(S.plusOne(digits));
+}
