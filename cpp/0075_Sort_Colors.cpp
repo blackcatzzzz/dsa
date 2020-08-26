@@ -22,6 +22,25 @@ Could you come up with a one-pass algorithm using only constant space?
 class Solution {
 public:
     void sortColors(vector<int>& nums) {
-        
+        int p0 = 0, p2 = nums.size() - 1;
+        int curr = 0;
+        while(curr <= p2){
+            if(nums[curr] == 2)
+                swap(nums[curr], nums[p2--]);
+
+            if(nums[curr] == 0)
+                swap(nums[curr], nums[p0++]);
+            if(nums[curr] == 2)
+                continue;
+            curr++;
+        }
     }
 };
+
+
+int main(){
+    Solution S;
+    vector<int> nums = {2,1,2};
+    S.sortColors(nums);
+    printVector(nums);
+}
