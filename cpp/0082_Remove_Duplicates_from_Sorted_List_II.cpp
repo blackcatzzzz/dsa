@@ -27,7 +27,26 @@ Output: 2->3
 class Solution {
 public:
     ListNode* deleteDuplicates(ListNode* head) {
-        
+        ListNode* dummy = new ListNode(0);
+        dummy->next = head;
+        ListNode* slow = dummy;
+        ListNode* fast = head;
+        while (fast && fast->next){
+            if(fast->val == fast->next->val){
+                int sameVal = fast->val;
+                while(fast && fast->val == sameVal){
+                    ListNode* tmp = fast;
+                    fast = fast->next;
+                    delete tmp;
+                    tmp = nullptr;
+                }
+                slow->next = fast;
+            }else{
+                slow = slow->next;
+                fast = fast->next;
+            }
+        }
+        return dummy->next;
     }
 };
 
