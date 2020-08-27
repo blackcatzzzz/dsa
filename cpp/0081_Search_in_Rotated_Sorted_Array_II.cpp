@@ -25,10 +25,34 @@ Would this affect the run-time complexity? How and why?
 class Solution {
 public:
     bool search(vector<int>& nums, int target) {
-        
+        int lo = 0, hi = nums.size() - 1;
+        while(lo <= hi){
+            int mid = lo + (hi - lo) / 2;
+            if(target == nums[mid])
+                return true;
+            
+            while(lo != mid && nums[lo] == nums[mid])
+                lo++;
+
+            if(nums[lo] <= nums[mid]){
+                if(nums[lo] <= target && target < nums[mid])
+                    hi = mid - 1;
+                else
+                    lo = mid + 1;
+            }else{
+                if(nums[mid] < target && target <= nums[hi])
+                    lo = mid + 1;
+                else
+                    hi = mid - 1;
+            }
+        }
+
+        return false;
     }
 };
 
 int main(){
-
+    Solution S;
+    vector<int> nums = {1,3,1,1,1};
+    cout << S.search(nums, 3);
 }

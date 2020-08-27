@@ -41,10 +41,30 @@ for (int i = 0; i < len; i++) {
 class Solution {
 public:
     int removeDuplicates(vector<int>& nums) {
-        
+        if(nums.size() == 0)
+            return 0;
+
+        int slow = 0, fast = 1;
+        bool canRepeat = true;
+        while(fast < nums.size()){
+            if(nums[slow] == nums[fast] && canRepeat){
+                nums[++slow] = nums[fast];
+                canRepeat = false;
+            }else if(nums[slow] != nums[fast]){
+                nums[++slow] = nums[fast];
+                canRepeat = true;
+            }
+
+            fast++;
+        }
+
+        return slow + 1;
     }
 };
 
 int main(){
-
+    vector<int> nums = {1,1,1,2,2,3};
+    Solution S;
+    cout << S.removeDuplicates(nums) << endl;
+    printVector(nums);
 }

@@ -31,13 +31,14 @@ public:
             if(nums[mid] == target)
                 return mid;
             
-            if(nums[lo] <= nums[mid]){
+            if(nums[lo] <= nums[mid]){  // 等号处理{3,1} 或者 {1} 只有一个的情况(mid = lo = 0)，1个元素也是有序；保证了下面的nums[mid] < target成立
                 if(nums[lo] <= target && target < nums[mid])
                     hi = mid - 1;
                 else
                     lo = mid + 1;
             }else{
-                if(nums[mid] < target && target <= nums[hi])
+                // if(nums[mid+1] <= target && target <= nums[hi]) 这样写也可以
+                if(nums[mid] < target && target <= nums[hi]) // mid位置一定在最大数后面，所以mid后一定是有序（mid == lo的例外情况已被上面if处理）
                     lo = mid + 1;
                 else
                     hi = mid - 1;
@@ -50,6 +51,6 @@ public:
 
 int main(){
     Solution S;
-    vector<int> nums{4,5,6,0,1,2};
-    cout << S.search(nums, 5) << endl;
+    vector<int> nums{3,1};  //{1}
+    cout << S.search(nums, 1) << endl;
 }
