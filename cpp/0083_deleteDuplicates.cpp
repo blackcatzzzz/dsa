@@ -32,13 +32,12 @@ public:
             if(slow->val == fast->val){
                 ListNode* toDel = fast;
                 fast = fast->next;
-                if(toDel != slow){
-                    delete toDel;
-                    toDel = nullptr;
-                }
+                delete toDel;
+                toDel = nullptr;
             }else{
                 slow->next = fast;
                 slow = slow->next;
+                fast = fast->next;
             }
         }
 
@@ -52,8 +51,8 @@ int main(){
     ListNode* cur = head;
     cur = cur->next = new ListNode(1);
     cur = cur->next = new ListNode(2);
-    cur = cur->next = new ListNode(3);
-    cur = cur->next = new ListNode(3);
+    // cur = cur->next = new ListNode(3);
+    // cur = cur->next = new ListNode(3);
 
     Solution S;
     printList(S.deleteDuplicates(head));

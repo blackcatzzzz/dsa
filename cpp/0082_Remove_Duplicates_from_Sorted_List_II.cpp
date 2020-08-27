@@ -16,9 +16,17 @@ Output: 2->3
 
 #include "common.h"
 
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
 class Solution {
 public:
-    bool exist(vector<vector<char>>& board, string word) {
+    ListNode* deleteDuplicates(ListNode* head) {
         
     }
 };
