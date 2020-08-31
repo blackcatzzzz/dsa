@@ -38,6 +38,13 @@ template<typename T>
     cout << endl;
  }
 
+ template<typename T>
+ void printVectors(vector<vector<T>>& arrs){
+    for(vector<T>& arr : arrs)
+        printVector(arr);
+    cout << endl;
+ }
+
  
 void printList(ListNode* head){
 	while(head){
