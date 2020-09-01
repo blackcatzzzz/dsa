@@ -39,11 +39,56 @@ s consists of digits only.
 class Solution {
 public:
     vector<string> restoreIpAddresses(string s) {
+        dfs(s, 0);
+        return res;
+    }
+
+private:
+    void dfs(const string& s, int start){
+        if(path.size() == 4){
+            string ip;
+            for(auto s : path)
+                ip += s + ".";
+            res.push_back(ip.substr(0, ip.size() - 1));
+        }
+
+        for(int i = 1; i <= 3; i++){
+            if(s.size() - start - i > (3 - path.size()) * 3 || s.size() - start - i < (3 - path.size()))
+                continue;
+
+            string str = s.substr(start, i);
+            if(!isValid(str))
+                continue;
+            path.push_back(str);
+            dfs(s, start + i);
+            path.pop_back();
+        }
 
     }
+
+private:
+    bool isValid(const string& s){
+        if(s.size() > 1 && s[0] == '0')
+            return false;
+
+        int num = 0;
+        for(int i = 0; i < s.size(); i++)
+            num = num * 10 + (s[i] - '0');
+        
+        if(num < 0 || num > 255)
+            return false;
+
+        return true;
+    }
+
+private:
+    vector<string> res;
+    vector<string> path;
 };
 
 
 int main(){
-
+    Solution S;
+    string s = "25525511135";
+    printVector(S.restoreIpAddresses(s));
 }
