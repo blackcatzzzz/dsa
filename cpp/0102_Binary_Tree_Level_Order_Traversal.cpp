@@ -31,7 +31,70 @@ return its level order traversal as:
 class Solution {
 public:
     vector<vector<int>> levelOrder(TreeNode* root) {
-        
+        vector<vector<int>> res;
+        if(!root) 
+            return res;
+        queue<TreeNode*> q;
+        q.push(root);
+        int curLevelCount = 1;
+        int nextLevelCount = 0;
+        vector<int> nodes;
+        while(!q.empty()){
+            TreeNode* x = q.front();
+            q.pop();
+            nodes.push_back(x->val);
+
+            if(x->left){
+                q.push(x->left);
+                nextLevelCount++;
+            }
+
+            if(x->right){
+                q.push(x->right);
+                nextLevelCount++;
+            }
+
+            curLevelCount--;
+            if(!curLevelCount){
+                res.push_back(nodes);
+                nodes.clear();
+                curLevelCount = nextLevelCount;
+                nextLevelCount = 0;
+            }
+        }
+
+        return res;
+    }
+};
+
+class Solution {
+public:
+    vector<vector<int>> levelOrder(TreeNode* root) {
+        vector<vector<int>> res;
+        if(!root) 
+            return res;
+        queue<TreeNode*> q;
+        q.push(root);
+        vector<int> nodes;
+        while(!q.empty()){
+            int count = q.size();
+            while(count--){
+                TreeNode* x = q.front();
+                q.pop();
+                nodes.push_back(x->val);
+
+                if(x->left)
+                    q.push(x->left);
+
+                if(x->right)
+                    q.push(x->right);
+            }
+
+            res.push_back(nodes);
+            nodes.clear();
+        }
+
+        return res;
     }
 };
 
