@@ -31,10 +31,24 @@ One possible answer is: [0,-3,9,-10,null,5], which represents the following heig
 class Solution {
 public:
     TreeNode* sortedArrayToBST(vector<int>& nums) {
-        
+        return helper(nums, 0, nums.size() - 1);
+    }
+
+private:
+    TreeNode* helper(vector<int>& nums, int lo, int hi){
+        if(lo > hi)
+            return nullptr;
+        int mid = lo + (hi - lo) / 2;
+        TreeNode* root = new TreeNode(nums[mid]);
+        root->left = helper(nums, lo, mid - 1);
+        root->right = helper(nums, mid + 1, hi);
+        return root;
     }
 };
 
 int main(){
-
+    vector<int> nums = {-10,-3,0,5,9};
+    Solution S;
+    TreeNode* root = S.sortedArrayToBST(nums);
+    getchar();
 }

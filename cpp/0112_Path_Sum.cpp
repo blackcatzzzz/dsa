@@ -32,7 +32,14 @@ return true, as there exist a root-to-leaf path 5->4->11->2 which sum is 22.
 class Solution {
 public:
     bool hasPathSum(TreeNode* root, int sum) {
-        
+        if(!root)
+            return false;
+        if(!root->left && !root->right && sum - root->val == 0)
+            return true;
+        sum -= root->val;
+        if(hasPathSum(root->left, sum) || hasPathSum(root->right, sum))
+            return true;
+        return false;
     }
 };
 

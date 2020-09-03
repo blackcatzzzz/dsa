@@ -37,8 +37,33 @@ Return:
 class Solution {
 public:
     vector<vector<int>> pathSum(TreeNode* root, int sum) {
-        
+        if(!root)
+            return {};
+        helper(root, sum);
+        return res;
     }
+
+private:
+    void helper(TreeNode* root, int sum){
+        if(!root)
+            return;
+
+        path.push_back(root->val);
+        if(!root->left && !root->right && sum - root->val == 0){
+            res.push_back(path);
+            path.pop_back();
+            return;
+        }
+
+        helper(root->left, sum - root->val);
+        helper(root->right, sum - root->val);
+        path.pop_back();
+        return;
+    }
+
+private:
+    vector<vector<int>> res;
+    vector<int> path;
 };
 
 int main(){

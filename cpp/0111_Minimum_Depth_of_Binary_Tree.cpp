@@ -32,7 +32,15 @@ return its minimum depth = 2.
 class Solution {
 public:
     int minDepth(TreeNode* root) {
-        
+        if(!root)
+            return 0;
+        int leftHeight = minDepth(root->left);
+        int rightHeight = minDepth(root->right);
+        if(leftHeight && rightHeight)
+            return 1 + min(leftHeight, rightHeight);
+        else if(leftHeight)
+            return 1 + leftHeight;
+        return 1 + rightHeight;
     }
 };
 
