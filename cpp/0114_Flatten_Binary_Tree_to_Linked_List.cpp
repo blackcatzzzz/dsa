@@ -40,7 +40,26 @@ The flattened tree should look like:
 class Solution {
 public:
     void flatten(TreeNode* root) {
-        
+        if(!root)
+            return;
+        stack<TreeNode*> S;
+        TreeNode* dummy = new TreeNode(0, nullptr, root);
+        S.push(root);
+        TreeNode* pre = dummy;
+        while (!S.empty()){
+            TreeNode* curr = S.top();
+            S.pop();
+            pre->left = nullptr;
+            pre->right = curr;
+            if(curr->right)
+                S.push(curr->right);
+            if(curr->left)
+                S.push(curr->left);
+            pre = curr;
+        }
+
+        delete dummy;
+        dummy = nullptr;
     }
 };
 
