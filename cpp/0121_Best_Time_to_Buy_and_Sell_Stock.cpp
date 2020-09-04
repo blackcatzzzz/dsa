@@ -24,9 +24,21 @@ Explanation: In this case, no transaction is done, i.e. max profit = 0.
 class Solution {
 public:
     int maxProfit(vector<int>& prices) {
+        int minPrice = INT_MAX;
+        int maxProfit = 0;
+        for(int i = 0; i < prices.size(); i++){
+            if(prices[i] < minPrice)
+                minPrice = prices[i];
+            else
+                maxProfit = max(prices[i] - minPrice, maxProfit);
+        }
 
+        return maxProfit;
     }
 };
-int main(){
 
+int main(){
+    Solution S;
+    vector<int> prices = {7,1,5,3,6,4};
+    cout << S.maxProfit(prices);
 }

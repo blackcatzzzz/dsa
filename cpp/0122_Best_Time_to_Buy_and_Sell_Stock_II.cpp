@@ -39,9 +39,45 @@ Constraints:
 class Solution {
 public:
     int maxProfit(vector<int>& prices) {
-
+        int maxProfit = 0;
+        int buy = 0, sell = 0;
+        for(int i = 0; i < prices.size() - 1; i++){
+            int profit = prices[i + 1] - prices[i];
+            if(profit > 0)
+                maxProfit += profit;
+        }
+        return maxProfit;
     }
 };
-int main(){
 
+
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        int maxProfit = 0;
+        int buy = 0, sell = 0;
+        for(int i = 0; i < prices.size() - 1;){
+            while(prices[i] > prices[i + 1]){
+                i++;
+                continue;
+            }
+
+            buy = prices[i];
+
+            while(i < prices.size() - 1 && prices[i] <= prices[i + 1]){
+                i++;
+                continue;
+            }
+
+            sell = prices[i];
+            maxProfit += sell - buy;
+        }
+        return maxProfit;
+    }
+};
+
+int main(){
+    vector<int> prices = {7,1,5,3,6,4};
+    Solution S;
+    cout << S.maxProfit(prices);
 }
