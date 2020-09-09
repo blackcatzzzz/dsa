@@ -49,10 +49,34 @@ Therefore, sum = 495 + 491 + 40 = 1026.
 class Solution {
 public:
     int sumNumbers(TreeNode* root) {
-
+        helper(root, 0);
+        return res;
     }
+
+private:
+    void helper(TreeNode* root, int num){
+        if(!root)
+            return;
+
+        num = num * 10 + root->val;
+        if(!root->left && !root->right){
+            res += num;
+            return;
+        }
+
+        helper(root->left, num);
+        helper(root->right, num);
+        return;
+    }
+
+private:
+    int res = 0;
 };
 
 int main(){
-
+    Solution S;
+    TreeNode* root = new TreeNode(1);
+    root->left = new TreeNode(2);
+    root->right = new TreeNode(3);
+    cout << S.sumNumbers(root);
 }
