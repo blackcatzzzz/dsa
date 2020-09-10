@@ -29,9 +29,63 @@ Output: false
 class Solution {
 public:
     bool wordBreak(string s, vector<string>& wordDict) {
+        len = s.size();
+        vector<bool> dp(len + 1, false);
+        for(auto& word : wordDict)
+            wordDictSet.insert(word);
 
+        dp[0] = true;
+        for(int i = 1; i <= len; i++){
+            for(int j = 0; j < i; j++){
+                if(dp[j] && wordDictSet.count(s.substr(j, i - j))){
+                    dp[i] = true;
+                    break;
+                }
+            }
+        }
+        
+        return dp[len];
     }
-};
-int main(){
 
+private:
+    int len = 0;
+    unordered_set<string> wordDictSet;
+};
+
+
+// time out
+class Solution_timeout {
+public:
+    bool wordBreak(string s, vector<string>& wordDict) {
+        len = s.size();
+        for(auto& word : wordDict)
+            wordExist[word] = true;
+        return helper(s, wordDict, 0);
+    }
+
+private:
+    bool helper(const string& s, vector<string>& wordDict, int start){
+        if(start == len)
+            return true;
+
+        for(int i = 1; i <= len - start; i++){
+            if(!wordExist[s.substr(start, i)])
+                continue;
+            if(helper(s, wordDict, start + i))
+                return true;
+        }
+
+        return false;
+    }
+
+private:
+    int len = 0;
+    unordered_map<string, bool> wordExist;
+};
+
+int main(){
+    Solution S;
+    string s = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab";
+    vector<string> wordDict = {"a","aa","aaa","aaaa","aaaaa","aaaaaa","aaaaaaa","aaaaaaaa","aaaaaaaaa","aaaaaaaaaa"};
+    cout << S.wordBreak(s, wordDict);
 }
