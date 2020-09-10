@@ -42,7 +42,7 @@ Number of Nodes will not exceed 1000.
 
 #include "common.h"
 
-/*
+
 // Definition for a Node.
 class Node {
 public:
@@ -56,14 +56,62 @@ public:
         random = NULL;
     }
 };
-*/
+
 
 class Solution {
 public:
     Node* copyRandomList(Node* head) {
+        if(!head)
+            return nullptr;
         
+        Node* cloneNode = new Node(head->val);
+        cloneMap[head] = cloneNode;
+        cloneNode->next = copyRandomList(head->next);
+        cloneNode->random = cloneMap[head->random];
+        return cloneNode;
     }
+
+private:
+    unordered_map<Node*, Node*> cloneMap;
 };
+
+class Solution_Iter {
+public:
+    Node* copyRandomList(Node* head) {
+        if(!head)
+            return nullptr;
+        
+        Node* oldNode = head;
+        Node* newNode = new Node(head->val);
+        cloneMap[head] = newNode;
+        while(oldNode){
+            newNode->next = getClodeNode(oldNode->next);
+            newNode->random = getClodeNode(oldNode->random);
+
+            oldNode = oldNode->next;
+            newNode = newNode->next;
+        }
+
+        return cloneMap[head];
+    }
+
+private:
+    Node* getClodeNode(Node* node){
+        if(!node)
+            return nullptr;
+
+        if(cloneMap[node])
+            return cloneMap[node];
+        
+        Node* newNode = new Node(node->val);
+        cloneMap[node] = newNode;
+        return newNode;
+    }
+
+private:
+    unordered_map<Node*, Node*> cloneMap;
+};
+
 
 int main(){
 

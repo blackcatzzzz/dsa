@@ -50,10 +50,53 @@ Therefore, you can't travel around the circuit once no matter where you start.
 class Solution {
 public:
     int canCompleteCircuit(vector<int>& gas, vector<int>& cost) {
+        int count = gas.size();
+        int cur_tank = 0, total_tank = 0;
+        int start = 0;
+        for(int i = 0; i < count; i++){
+            total_tank += gas[i] - cost[i];
+            cur_tank += gas[i] - cost[i];
+            if(cur_tank < 0){
+                start = i + 1;
+                cur_tank = 0;
+            }
+        }
 
+        return total_tank >= 0 ? start : - 1;
     }
 };
 
-int main(){
 
+// O(N*N)
+class Solution1 {
+public:
+    int canCompleteCircuit(vector<int>& gas, vector<int>& cost) {
+        count = gas.size();
+        for(int i = 0; i < gas.size(); i++)
+            if(helper(gas, cost, i))
+                return i;
+        return -1;
+    }
+
+private:
+    bool helper(vector<int>&gas, vector<int>& cost, int start){
+        int tank = 0;
+        int i = start, step = count;
+        for(; step-- > 0; i++){
+            tank += gas[i % count] - cost[i % count];
+            if(tank < 0)
+                return false;
+        }
+        return true;
+    }
+
+private:
+    int count = 0;
+};
+
+int main(){
+    vector<int> gas  = {3,3,4};
+    vector<int> cost = {3,4,4};
+    Solution S;
+    cout << S.canCompleteCircuit(gas, cost);
 }

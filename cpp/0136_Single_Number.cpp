@@ -21,10 +21,16 @@ Output: 4
 class Solution {
 public:
     int singleNumber(vector<int>& nums) {
+        int ans = 0;
+        for(int i = 0; i < nums.size(); i++)
+            ans ^= nums[i];
 
+        return ans;
     }
 };
 
 int main(){
-
+    vector<int> nums = {1,2,2};
+    Solution S;
+    cout << S.singleNumber(nums);
 }
