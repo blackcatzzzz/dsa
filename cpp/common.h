@@ -90,3 +90,26 @@ void printList(ListNode* head){
 	}
 	cout << endl;
 }
+
+class List{
+public:
+    List():head(nullptr), tail(nullptr){}
+
+    List(int val):head(new ListNode(val)), tail(){
+        tail = head;
+    }
+
+    List* add(int val){
+        tail->next =  new ListNode(val);
+        tail = tail->next;
+        return this;
+    }
+
+    ListNode* getHead(){
+        return head;
+    }
+
+private:
+    ListNode* head;
+    ListNode* tail;
+};

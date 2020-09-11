@@ -29,9 +29,29 @@ Follow up: Recursive solution is trivial, could you do it iteratively?
 class Solution {
 public:
     vector<int> preorderTraversal(TreeNode* root) {
+        vector<int> res;
+        stack<TreeNode*> stk;
+        TreeNode* x = root;
+        while(x || !stk.empty()){
+            while(x){
+                res.push_back(x->val);
+                if(x->right)
+                    stk.push(x->right);
+                x = x->left;
+            }
 
+            if(stk.empty())
+                break;
+
+            x = stk.top();
+            stk.pop();
+        }
+
+        return res;
     }
 };
+
+
 int main(){
 
 }
