@@ -49,12 +49,33 @@ Can you solve it without using extra space?
 class Solution {
 public:
     ListNode *detectCycle(ListNode *head) {
+        ListNode* meetingNode = getMeetingNode(head);
+        if(!meetingNode)
+            return nullptr;
 
+        ListNode* p1 = head;
+        ListNode* p2 = meetingNode;
+        
+        while(p1 != p2){
+            p1 = p1->next;
+            p2 = p2->next;
+        }
+
+        return p1;
     }
 
 private:
     ListNode* getMeetingNode(ListNode* head){
+        ListNode* slow = head, *fast = head;
+        while(fast && fast->next){
+            slow = slow->next;
+            fast = fast->next->next;
 
+            if(slow == fast)
+                return slow;
+        }
+
+        return nullptr;
     }
 };
 

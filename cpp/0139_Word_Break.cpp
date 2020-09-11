@@ -53,8 +53,8 @@ private:
 };
 
 
-// time out
-class Solution_timeout {
+// 回溯 + 记忆
+class Solution {
 public:
     bool wordBreak(string s, vector<string>& wordDict) {
         len = s.size();
@@ -69,9 +69,12 @@ private:
             return true;
 
         for(int i = 1; i <= len - start; i++){
-            if(!wordExist[s.substr(start, i)])
+            if(!wordExist[s.substr(start, i)] || visited.count(start + i))
                 continue;
-            if(helper(s, wordDict, start + i))
+
+            visited.insert(start + i);
+            bool res = helper(s, wordDict, start + i);
+            if(res)
                 return true;
         }
 
@@ -81,6 +84,7 @@ private:
 private:
     int len = 0;
     unordered_map<string, bool> wordExist;
+    unordered_set<int> visited;
 };
 
 int main(){
