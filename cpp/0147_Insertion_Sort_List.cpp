@@ -34,12 +34,70 @@ Output: -1->0->3->4->5
  *     ListNode(int x) : val(x), next(NULL) {}
  * };
  */
+
 class Solution {
 public:
     ListNode* insertionSortList(ListNode* head) {
+        if(!head || !head->next)
+            return head;
+        ListNode* dummy = new ListNode(-1);
+        dummy->next = head;
+        ListNode* sortedTail = head;
+        ListNode* curr = head->next;
+        while(curr){
+            if(curr->val < sortedTail->val){
+                ListNode* insertPos = dummy;
+                while(insertPos->next->val < curr->val)
+                    insertPos = insertPos->next;
+                sortedTail->next = curr->next;
 
+                curr->next = insertPos->next;
+                insertPos->next = curr;
+
+                curr = sortedTail->next;
+            }else{
+                sortedTail = curr;
+                curr = curr->next;
+            }
+        }
+        
+        return dummy->next;
     }
 };
-int main(){
 
+class Solution_Recursive {
+public:
+    ListNode* insertionSortList(ListNode* head) {
+        if(!head || !head->next)
+            return head;
+        ListNode* sortedHead = insertionSortList(head->next);
+        head->next = sortedHead;
+        ListNode* newHead = nullptr;
+        if(head->val <= sortedHead->val)
+            newHead = head;
+        else
+            newHead = sortedHead;
+        
+        ListNode* curr = sortedHead;
+        ListNode* insertPos = nullptr;
+        while(curr && curr->val < head->val){
+            insertPos = curr;
+            curr = curr->next;
+        }
+
+        if(insertPos){
+            head->next = insertPos->next;
+            insertPos->next = head;
+        }
+        
+        return newHead;
+    }
+};
+
+
+int main(){
+    Solution S;
+    List* l = new List(4);
+    l->add(2)->add(1)->add(3);
+    printList(S.insertionSortList(l->getHead()));
 }

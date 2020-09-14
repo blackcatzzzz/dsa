@@ -26,10 +26,41 @@ Output: -1->0->3->4->5
 class Solution {
 public:
     ListNode* sortList(ListNode* head) {
+        if(!head || !head->next)
+            return head;
 
+        ListNode* slow = head, *fast = head->next;
+        while(fast && fast->next){
+            slow = slow->next;
+            fast = fast->next->next;
+        } 
+
+        ListNode* other = slow->next;
+        slow->next = nullptr;
+        ListNode* h1 = sortList(head);
+        ListNode* h2 = sortList(other);
+        ListNode* dummy = new ListNode(-1);
+        ListNode* curr = dummy;
+        while(h1 && h2){
+            if(h1->val <= h2->val){
+                curr->next = h1;
+                h1 = h1->next;
+            }else{
+                curr->next = h2;
+                h2 = h2->next;
+            }
+
+            curr = curr->next;
+        }
+
+        curr->next = h1 ? h1 : h2;
+        return dummy->next;
     }
 };
 
 int main(){
-
+    List* l = new List(4);
+    l->add(1)->add(2)->add(3);
+    Solution S;
+    printList(S.sortList(l->getHead()));
 }
