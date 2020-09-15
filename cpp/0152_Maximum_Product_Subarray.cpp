@@ -19,10 +19,25 @@ Explanation: The result cannot be 2, because [-2,-1] is not a subarray.
 class Solution {
 public:
     int maxProduct(vector<int>& nums) {
+        int n = nums.size();
+        if(!n) return 0;
 
+        vector<int> maxProduct(n, 0),minProduct(n, 0);
+        maxProduct[0] = minProduct[0] = nums[0];
+        for(int i = 1; i < n; i++){
+            maxProduct[i] = max(maxProduct[i - 1] * nums[i], max(minProduct[i - 1] * nums[i], nums[i]));
+            minProduct[i] = min(maxProduct[i - 1] * nums[i], min(minProduct[i - 1] * nums[i], nums[i]));
+        }
+        
+        int res = INT_MIN;
+        for(auto& p:maxProduct)
+            res = max(res, p);
+        return res;
     }
 };
 
 int main(){
-
+    Solution S;
+    vector<int> nums = {-2,0,-1};
+    cout << S.maxProduct(nums);
 }
