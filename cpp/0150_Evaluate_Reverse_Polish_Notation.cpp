@@ -37,10 +37,33 @@ Explanation:
 class Solution {
 public:
     int evalRPN(vector<string>& tokens) {
-
+        stack<int> stack;
+        for(auto& token : tokens){
+            if(token != "+" && token != "-" && token != "*" && token != "/"){
+                stack.push(stoi(token));
+            }else{
+                int right = stack.top();
+                stack.pop();
+                int left = stack.top();
+                stack.pop();
+                int res = 0;
+                if(token == "+")
+                    res = left + right;
+                else if(token == "-")
+                    res = left - right;
+                else if(token == "*")
+                    res = left * right;
+                else
+                    res = left / right;
+                stack.push(res);
+            }
+        }
+        return stack.top();
     }
 };
 
 int main(){
-
+    vector<string> tokens = {"10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+", "5", "+"};
+    Solution S;
+    cout << S.evalRPN(tokens);
 }
