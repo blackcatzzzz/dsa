@@ -51,10 +51,32 @@ All the given revisions in version1 and version2 can be stored in a 32-bit integ
 class Solution {
 public:
     int compareVersion(string version1, string version2) {
+        int p1 = 0, p2 = 0;
+        while(p1 < version1.size() || p2 < version2.size()){
+            int v1 = p1 >= version1.size() ? 0 : getNextChunk(version1, p1);
+            int v2 = p2 >= version2.size() ? 0 : getNextChunk(version2, p2);
+            p1++;
+            p2++;
+            if(v1 < v2)
+                return -1;
+            if(v1 > v2) 
+                return 1;
+        }
 
+        return 0;
+    }
+
+private:
+    int getNextChunk(const string& version, int& p){
+        int start = p;
+        while(p < version.size() && version[p] != '.')
+            p++;
+        return stoi(version.substr(start , p - start));
     }
 };
 
 int main(){
-
+    Solution S;
+    string v1 = "1.0.1", v2 = "1";
+    cout << S.compareVersion(v1, v2);
 }
