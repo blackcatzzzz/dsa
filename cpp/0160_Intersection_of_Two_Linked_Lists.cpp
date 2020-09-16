@@ -56,7 +56,16 @@ Your code should preferably run in O(n) time and use only O(1) memory.
 class Solution {
 public:
     ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        if(!headA || !headB)
+            return nullptr;
         
+        ListNode* pA= headA, *pB = headB;
+        while(pA != pB){
+            pA = !pA ? headB : pA->next;
+            pB = !pB ? headA : pB->next;
+        }
+
+        return pA;
     }
 };
 
