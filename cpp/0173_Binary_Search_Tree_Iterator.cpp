@@ -42,18 +42,31 @@ You may assume that next() call will always be valid, that is, there will be at 
 class BSTIterator {
 public:
     BSTIterator(TreeNode* root) {
-
+        inorder(root);
     }
     
     /** @return the next smallest number */
     int next() {
-
+        return sortedNodes[index++];
     }
     
     /** @return whether we have a next smallest number */
     bool hasNext() {
-
+        return index < sortedNodes.size();
     }
+
+private:
+    void inorder(TreeNode* root){
+        if(!root)
+            return;
+        inorder(root->left);
+        sortedNodes.push_back(root->val);
+        inorder(root->right);
+    }
+
+private:
+    vector<int> sortedNodes;
+    int index = 0;
 };
 
 /**

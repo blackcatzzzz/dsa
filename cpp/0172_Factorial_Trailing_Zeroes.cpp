@@ -20,10 +20,18 @@ Note: Your solution should be in logarithmic time complexity.
 class Solution {
 public:
     int trailingZeroes(int n) {
+        int count = 0;
+        long long currentMultiple = 5;
+        while(n >= currentMultiple){
+            count += n / currentMultiple;
+            currentMultiple *= 5;
+        }
 
+        return count;
     }
 };
 
 int main(){
-
+    Solution S;
+    cout << S.trailingZeroes(1808548329);
 }
