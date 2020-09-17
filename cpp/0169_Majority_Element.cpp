@@ -19,7 +19,16 @@ Output: 2
 class Solution {
 public:
     int majorityElement(vector<int>& nums) {
-        
+        unordered_map<int, int> counts;
+        int majority = 0, maxCnt = 0;
+        for(auto& num : nums){
+            counts[num]++;
+            if(counts[num] > maxCnt){
+                maxCnt = counts[num];
+                majority = num;
+            }
+        }
+        return majority;
     }
 };
 

@@ -31,10 +31,22 @@ Output: "ZY"
 class Solution {
 public:
     string convertToTitle(int n) {
-
+        stack<string> stk;
+        while(n){
+            n--;
+            stk.push(string(1, n % 26 + 'A'));
+            n = n / 26;
+        }
+        string ans;
+        while(!stk.empty()){
+            ans += stk.top();
+            stk.pop();
+        }
+        return ans;
     }
 };
 
 int main(){
-
+    Solution S;
+    cout << S.convertToTitle(28);
 }

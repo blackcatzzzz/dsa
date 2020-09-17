@@ -22,16 +22,3 @@ For example, given the above Logs table, 1 is the only number that appears conse
 | 1               |
 +-----------------+
 */
-
-#include "common.h"
-
-class Solution {
-public:
-    int majorityElement(vector<int>& nums) {
-        
-    }
-};
-
-int main(){
-
-}
