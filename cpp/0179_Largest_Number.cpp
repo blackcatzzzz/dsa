@@ -18,10 +18,30 @@ Note: The result may be very large, so you need to return a string instead of an
 class Solution {
 public:
     string largestNumber(vector<int>& nums) {
+        vector<string> asStrs(nums.size());
+        for(int i = 0; i < nums.size(); i++)
+            asStrs[i] = to_string(nums[i]);
+        
+        auto cmp = [](const string& a, const string& b){
+            string order1 = a + b;
+            string order2 = b + a;
+            return order1 > order2;
+        };
 
+        sort(asStrs.begin(), asStrs.end(), cmp);
+        if(asStrs[0] == "0")
+            return "0";
+
+        string ans;
+        for(auto& str : asStrs)
+            ans += str;
+
+        return ans;
     }
 };
 
 int main(){
-
+    Solution S;
+    vector<int> nums = {0};
+    cout << S.largestNumber(nums);
 }
