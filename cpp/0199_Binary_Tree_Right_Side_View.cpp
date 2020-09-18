@@ -29,7 +29,28 @@ Explanation:
 class Solution {
 public:
     vector<int> rightSideView(TreeNode* root) {
+        if(!root)
+            return {};
+        vector<int> res;
+        queue<TreeNode*> q;
+        q.push(root);
+        while(!q.empty()){
+            int count = q.size();
+            while(count--){
+                TreeNode* x = q.front();
+                q.pop();
 
+                if(count == 0)
+                    res.push_back(x->val);
+
+                if(x->left)
+                    q.push(x->left);
+                if(x->right)
+                    q.push(x->right);
+            }
+        }
+
+        return res;
     }
 };
 
