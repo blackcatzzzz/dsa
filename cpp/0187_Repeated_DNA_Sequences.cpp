@@ -16,10 +16,22 @@ Output: ["AAAAACCCCC", "CCCCCAAAAA"]
 class Solution {
 public:
     vector<string> findRepeatedDnaSequences(string s) {
+        int n = s.size();
+        unordered_set<string> counts;
+        unordered_set<string> repeatStr;
+        for(int i = 0; i < n - 9; i++){
+            string str = s.substr(i, 10);
+            if(counts.count(str))
+                repeatStr.insert(str);
+            else
+                counts.insert(str);
+        }
 
+        return vector<string>(repeatStr.begin(), repeatStr.end());
     }
 };
 
 int main(){
-
+    Solution S;
+    printVector(S.findRepeatedDnaSequences(""));
 }

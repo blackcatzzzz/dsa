@@ -37,10 +37,36 @@ k >= 0
 class Solution {
 public:
     void rotate(vector<int>& nums, int k) {
-        
+        k = k % nums.size();
+        for(int start = 0, count = 0; count < nums.size();start++){
+            int pre = nums[start];
+            int cur = start;
+            do{
+                int next = (cur + k) % nums.size();
+                int tmp = nums[next];
+                nums[next] = pre;
+                pre = tmp;
+                cur = next;
+                count++;
+            }while(cur != start);
+        }
+    }
+};
+
+class Solution1 {
+public:
+    void rotate(vector<int>& nums, int k) {
+        if(k % nums.size() == 0)
+            return;
+        reverse(nums.begin(), nums.end());
+        reverse(nums.begin(), nums.begin() + k);
+        reverse(nums.begin() + k, nums.end());
     }
 };
 
 int main(){
-
+    Solution S;
+    vector<int> nums = {1,2,3,4};
+    S.rotate(nums,2);
+    printVector(nums);
 }
