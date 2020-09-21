@@ -29,3 +29,4 @@ Write a SQL query for a report that provides the following information for each 
 FirstName, LastName, City, State
 */
 
+select a.FirstName, a.LastName, b.City, b.State from Person a left join Address b on a.PersonId = b.PersonId;

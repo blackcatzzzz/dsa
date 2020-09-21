@@ -18,3 +18,9 @@ For example, given the above Employee table, the query should return 200 as the 
 | 200                 |
 +---------------------+
 */
+
+select (select Salary from Employee group by Salary order by Salary desc limit 1,1) as SecondHighestSalary ;
+
+select (select distinct Salary from Employee order by Salary desc limit 1,1) as SecondHighestSalary ;
+
+select ifnull((select distinct Salary from Employee order by Salary desc limit 1,1), NULL) as SecondHighestSalary ;
