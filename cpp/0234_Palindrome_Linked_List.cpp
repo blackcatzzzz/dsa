@@ -1,4 +1,3 @@
-
 /*
 234. Palindrome Linked List
 Given a singly linked list, determine if it is a palindrome.
@@ -17,14 +16,6 @@ Could you do it in O(n) time and O(1) space?
 
 #include "common.h"
 
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     ListNode *next;
- *     ListNode(int x) : val(x), next(NULL) {}
- * };
- */
 class Solution {
 public:
     bool isPalindrome(ListNode* head) {
@@ -37,22 +28,25 @@ public:
         if(fast)
             slow = slow->next;
 
-        ListNode* right = reverse(slow);
-        ListNode* left = head;
-        while(right){
-            if(left->val != right->val)
+        ListNode* h2 = reverse(slow);
+        ListNode* h1 = head;
+        while(h1 && h2){
+            if(h1->val != h2->val)
                 return false;
-            left = left->next;
-            right = right->next;
+            
+            h1 = h1->next;
+            h2 = h2->next;
         }
 
         return true;
     }
 
 private:
-    ListNode* reverse(ListNode* head){
-        ListNode* cur = head;
-        ListNode* pre = NULL;
+    ListNode* reverse(ListNode* node){
+        if(!node)
+            return nullptr;
+        ListNode* cur = node;
+        ListNode* pre = nullptr;
         while(cur){
             ListNode* next = cur->next;
             cur->next = pre;
