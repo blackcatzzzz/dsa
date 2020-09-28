@@ -51,8 +51,24 @@ You may assume k is always valid, 1 ≤ k ≤ BST's total elements.
 class Solution {
 public:
     int kthSmallest(TreeNode* root, int k) {
-        
+        _k = k;
+        inorder(root);
+        return nodes[k - 1];
     }
+
+private:
+    void inorder(TreeNode* root){
+        if(!root || _k == 0)
+            return;
+        inorder(root->left);
+        nodes.push_back(root->val);
+        --_k;
+        inorder(root->right);
+    }
+
+private:
+    vector<int> nodes;
+    int _k;
 };
 
 int main(){
