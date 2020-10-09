@@ -33,8 +33,29 @@ Explanation: All root-to-leaf paths are: 1->2->5, 1->3
 class Solution {
 public:
     vector<string> binaryTreePaths(TreeNode* root) {
-
+        dfs(root, "");
+        return ans;
     }
+
+private:
+    void dfs(TreeNode* root, string path){
+        if(!root)
+            return;
+
+        path += to_string(root->val);
+
+        if(!root->left && !root->right){
+            ans.push_back(path);
+            return;
+        }
+
+        path += "->";
+        dfs(root->left, path);
+        dfs(root->right, path);
+    }
+
+private:
+    vector<string> ans;
 };
 
 
