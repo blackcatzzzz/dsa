@@ -49,11 +49,43 @@ Constraints:
 class Solution{
 public:
     vector<int> maxSlidingWindow(vector<int>& nums, int k){
-
+        vector<int> ans;
+        for(int i = 0; i < nums.size(); i++){
+            if(i < k - 1){
+                push(nums[i]);
+            }else{
+                push(nums[i]);
+                ans.push_back(max());
+                pop(nums[i - k + 1]);
+            }
+        }
+        return ans;
     }
+
+private:
+    void push(int n){
+        while(!dq.empty() && dq.back() < n)
+            dq.pop_back();
+        dq.push_back(n);
+    }
+
+    int max(){
+        return dq.front();
+    }
+
+    void pop(int n){
+        if(!dq.empty() && dq.front() == n)
+            dq.pop_front();
+    }
+
+
+private:
+    deque<int> dq;
 };
 
 
 int main(){
-
+    Solution S;
+    vector<int> nums = {1,3,-1,-3,5,3,6,7};
+    printVector(S.maxSlidingWindow(nums, 3));
 }
