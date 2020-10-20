@@ -16,7 +16,19 @@ Note: The length of given array won't exceed 10000.
 class Solution{
 public:
     vector<int> nextGreaterElements(vector<int>& nums) {
+        int n = nums.size();
+        stack<int> monoStack;
+        vector<int> res(n, -1);
+        for(int i = 0; i < 2 * n; i++){
+            while(!monoStack.empty() && nums[monoStack.top() < nums[i % n]]){
+                res[monoStack.top()] = nums[i % n];
+                monoStack.pop();
+            }
 
+            monoStack.push(i % n);
+        }
+
+        return res;
     }
 };
 
