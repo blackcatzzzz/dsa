@@ -9,6 +9,7 @@
 #include <unordered_set>
 #include <limits>
 #include <string>
+#include <sstream>
 
 using namespace std;
 
