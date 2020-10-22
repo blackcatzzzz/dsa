@@ -36,7 +36,21 @@ The length of the linked list is between [0, 10^4].
 class Solution {
 public:
     ListNode* oddEvenList(ListNode* head) {
-        
+        if(!head)
+            return head;
+        ListNode* pre1 = head;
+        ListNode* pre2 = head->next;
+        while(pre2 && pre2->next){
+            ListNode* odd = pre2->next;
+            pre2->next = pre2->next->next;
+            odd->next = pre1->next;
+            pre1->next = odd;
+
+            pre1 = pre1->next;
+            pre2 = pre2->next;
+        }
+
+        return head;
     }
 };
 
