@@ -43,7 +43,8 @@ p contains only lowercase English letters, '?' or '*'.
 
 #include "common.h"
 
-class Solution {
+// O(mn)
+class Solution_DP {
 public:
     bool isMatch(string s, string p) {
         int m = s.size();
@@ -67,6 +68,56 @@ public:
         }
 
         return dp[m][n];
+    }
+};
+
+// 渐进复杂度：O(mn)  平均复杂度：O(mlogn)
+class Solution {
+public:
+    bool isMatch(string s, string p) {
+        auto allStars = [](const string& s, int left, int right){ // [left, right)
+            for(int i = left; i < right; i++){
+                if(s[i] != '*')
+                    return false;
+            }
+            return true;
+        };
+
+        auto charMatch = [](char u, char v){
+            return u == v || v == '?';
+        };
+
+        while(s.size() && p.size() && p.back() != '*'){
+            if(charMatch(s.back(), p.back())){
+                s.pop_back();
+                p.pop_back();
+            }else
+                return false;
+        }
+
+        if(p.empty())
+            return s.empty();
+
+        int sIndex = 0, pIndex = 0;
+        int sRecord = -1, pRecord =0;
+        while(sIndex < s.size() && pIndex < p.size()){
+            if(p[pIndex] == '*'){
+                pIndex++;
+                sRecord = sIndex;
+                pRecord = pIndex;
+            }else if(charMatch(s[sIndex], p[pIndex])){
+                sIndex++;
+                pIndex++;
+            }else if(sRecord != -1 && sRecord + 1 < s.size()){
+                sRecord++;
+                sIndex = sRecord;
+                pIndex = pRecord;
+            }else{
+                return false;
+            }
+        }
+
+        return allStars(p, pIndex, p.size());
     }
 };
 
