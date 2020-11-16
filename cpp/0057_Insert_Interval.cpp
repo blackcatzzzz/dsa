@@ -44,10 +44,37 @@ newInterval.length == 2
 class Solution {
 public:
     vector<vector<int>> insert(vector<vector<int>>& intervals, vector<int>& newInterval) {
+        vector<vector<int>> ans;
+        if(intervals.size() == 0){
+            ans.push_back(newInterval);
+            return ans;
+        }
 
+        bool inserted = false;
+        for(int i = 0; i < intervals.size() || !inserted;){
+            vector<int> curInterval;
+            if(i == intervals.size() || !inserted && newInterval[0] < intervals[i][0]){
+                curInterval = newInterval;
+                inserted = true;               
+            }else{
+                curInterval = intervals[i];
+                i++;
+            }
+
+            if(ans.size() != 0 && ans.back()[0] <= curInterval[0] && curInterval[0] <= ans.back()[1])
+                ans.back()[1] = max(curInterval[1], ans.back()[1]);
+            else{
+                ans.push_back(curInterval);
+            }
+        }
+
+        return ans;
     }
 };
 
 int main(){
-
+    Solution S;
+    vector<vector<int>> intervals = {{1,5}};
+    vector<int> newInervals = {2,7};
+    printVectors(S.insert(intervals, newInervals));
 }
