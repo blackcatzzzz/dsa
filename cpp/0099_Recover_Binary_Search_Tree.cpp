@@ -43,10 +43,51 @@ The number of nodes in the tree is in the range [2, 1000].
 class Solution {
 public:
     void recoverTree(TreeNode* root) {
+        stack<TreeNode*> stk;
+        TreeNode* x = root;
+        TreeNode* pred = nullptr;
+        TreeNode* p = nullptr, *q = nullptr;
+        while(true){
+            while(x){
+                stk.push(x);
+                x = x->left;
+            }
 
+            if(stk.empty())
+                break;
+
+            x = stk.top();
+            stk.pop();
+            if(pred != nullptr && pred->val > x->val){
+                q = x;
+                if(p == nullptr)
+                    p = pred;
+                else
+                    break;
+            }
+
+            pred = x;
+            x = x->right;
+        }
+
+        swap(p, q);
+
+        return;
     }
+
+private:
+    void swap(TreeNode* p, TreeNode* q){
+        int tmp = p->val;
+        p->val = q->val;
+        q->val = tmp;
+    }
+
 };
 
 int main(){
-
+    Solution S;
+    TreeNode* root = new TreeNode(1);
+    root->left = new TreeNode(3);
+    root->left->right = new TreeNode(2);
+    S.recoverTree(root);
 }
