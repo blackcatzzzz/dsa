@@ -48,10 +48,51 @@ s1 and s2 consist of lower-case English letters.
 class Solution {
 public:
     bool isScramble(string s1, string s2) {
+        if(s1.size() != s2.size())
+            return false;
 
+        if(s1 == s2)
+            return true;
+
+        vector<int> letters(26, 0);
+        for(int i = 0; i < s1.size(); i++){
+            letters[s1[i] - 'a']++;
+            letters[s2[i] - 'a']--;
+        }
+
+        for(int i = 0; i < 26; i++){
+            if(letters[i] != 0)
+                return false;
+        }
+
+        int n = s1.size();
+        vector<vector<vector<int>>> dp(n, vector<vector<int>>(n, vector<int>(n + 1)));
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < n; j++){
+                dp[i][j][1] = s1[i] == s2[j];
+            }
+        }
+
+        for(int len = 2; len <= n; len++){
+            for(int i = 0; i <= n - len; i++){
+                for(int j = 0; j <= n - len; j++){
+                    for(int k = 1; k <= len; k++){
+                        dp[i][j][len] = dp[i][j][k] && dp[i + k][j + k][len - k]
+                            || dp[i][j + len - k][k] && dp[i + k][j][len - k];
+
+                        if(dp[i][j][len])
+                            break;
+                    }
+                }
+            }
+        }
+
+        return dp[0][0][n];
     }
 };
 
 int main(){
-
+    Solution S;
+    string s1 = "great", s2 = "rgeat";
+    cout << S.isScramble(s1, s2);
 }
