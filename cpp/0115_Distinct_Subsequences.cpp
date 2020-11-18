@@ -42,10 +42,54 @@ s and t consist of English letters.
 class Solution {
 public:
     int numDistinct(string s, string t) {
-
+        ans = 0;
+        _t = t;
+        string res;
+        helper(s, 0);
+        return ans;
     }
+
+private:
+    void helper(const string& s, int start){
+        if(res.size() == _t.size()){
+            ++ans;
+            return;
+        }
+
+        if(start == s.size())
+            return;
+
+        stringstream ss;
+        ss << start << "@" << res.size();
+        string key(ss.str());
+        if(memo.count(key)){
+            ans += memo[key];
+            return;
+        }
+
+        int count_pre = ans;
+        for(int i = start; i < s.size(); i++){
+            if(s[i] != _t[res.size()])
+                continue;
+            res.push_back(s[i]);
+            helper(s, i + 1);
+            res.pop_back();
+        }
+
+        int count_inc = ans - count_pre;
+        memo[key] = count_inc;
+    }
+
+
+private:
+    string res;
+    int ans;
+    string _t;
+    unordered_map<string, int> memo;
 };
 
 int main(){
-
+    Solution S;
+    string s = "babgbag", t = "bag";
+    cout << S.numDistinct(s, t);
 }
