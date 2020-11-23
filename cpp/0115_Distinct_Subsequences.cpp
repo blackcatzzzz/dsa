@@ -39,7 +39,56 @@ s and t consist of English letters.
 
 #include "common.h"
 
+//overflow ?
 class Solution {
+public:
+    int numDistinct(string s, string t) {
+        int s_len = s.size();
+        int t_len = t.size();
+        vector<vector<int>> dp(s_len + 1, vector<int>(t_len + 1, 0));
+        // if t is empty, res = 1
+        for(int i = 0; i <= s_len; i++)
+            dp[i][0] = 1;
+
+        for(int j = 1; j <= t_len; j++){
+            dp[0][j] = 0; // could omit, default is 0
+            for(int i = 1; i <= s_len; i++){
+                if(s[i - 1] == t[j - 1])
+                    dp[i][j] = dp[i - 1][j - 1] + dp[i - 1][j];
+                else
+                    dp[i][j] = dp[i - 1][j];
+            }
+        }
+
+        return dp[s_len][t_len];
+    }
+};
+
+class Solution_Overflow {
+public:
+    int numDistinct(string s, string t) {
+        int s_len = s.size();
+        int t_len = t.size();
+        vector<vector<int>> dp(s_len + 1, vector<int>(t_len + 1, 0));
+        // if t is empty, res = 1
+        for(int i = 0; i <= s_len; i++)
+            dp[i][t_len] = 1;
+
+        for(int j = t_len - 1; j >= 0; j--){
+            dp[s_len][j] = 0; // could omit, default is 0
+            for(int i = s_len - 1; i >= 0; i--){
+                if(s[i] == t[j])
+                    dp[i][j] = dp[i + 1][j + 1] + dp[i + 1][j];
+                else
+                    dp[i][j] = dp[i + 1][j];
+            }
+        }
+
+        return dp[0][0];
+    }
+};
+
+class Solution_Memo {
 public:
     int numDistinct(string s, string t) {
         ans = 0;
@@ -56,8 +105,8 @@ private:
             return;
         }
 
-        if(start == s.size())
-            return;
+        // if(start == s.size())
+        //     return;
 
         stringstream ss;
         ss << start << "@" << res.size();
@@ -90,6 +139,7 @@ private:
 
 int main(){
     Solution S;
-    string s = "babgbag", t = "bag";
+    string s = "xslledayhxhadmctrliaxqpokyezcfhzaskeykchkmhpyjipxtsuljkwkovmvelvwxzwieeuqnjozrfwmzsylcwvsthnxujvrkszqwtglewkycikdaiocglwzukwovsghkhyidevhbgffoqkpabthmqihcfxxzdejletqjoxmwftlxfcxgxgvpperwbqvhxgsbbkmphyomtbjzdjhcrcsggleiczpbfjcgtpycpmrjnckslrwduqlccqmgrdhxolfjafmsrfdghnatexyanldrdpxvvgujsztuffoymrfteholgonuaqndinadtumnuhkboyzaqguwqijwxxszngextfcozpetyownmyneehdwqmtpjloztswmzzdzqhuoxrblppqvyvsqhnhryvqsqogpnlqfulurexdtovqpqkfxxnqykgscxaskmksivoazlducanrqxynxlgvwonalpsyddqmaemcrrwvrjmjjnygyebwtqxehrclwsxzylbqexnxjcgspeynlbmetlkacnnbhmaizbadynajpibepbuacggxrqavfnwpcwxbzxfymhjcslghmajrirqzjqxpgtgisfjreqrqabssobbadmtmdknmakdigjqyqcruujlwmfoagrckdwyiglviyyrekjealvvigiesnvuumxgsveadrxlpwetioxibtdjblowblqvzpbrmhupyrdophjxvhgzclidzybajuxllacyhyphssvhcffxonysahvzhzbttyeeyiefhunbokiqrpqfcoxdxvefugapeevdoakxwzykmhbdytjbhigffkmbqmqxsoaiomgmmgwapzdosorcxxhejvgajyzdmzlcntqbapbpofdjtulstuzdrffafedufqwsknumcxbschdybosxkrabyfdejgyozwillcxpcaiehlelczioskqtptzaczobvyojdlyflilvwqgyrqmjaeepydrcchfyftjighntqzoo"
+, t = "rwmimatmhydhbujebqehjprrwfkoebcxxqfktayaaeheys";
     cout << S.numDistinct(s, t);
 }
