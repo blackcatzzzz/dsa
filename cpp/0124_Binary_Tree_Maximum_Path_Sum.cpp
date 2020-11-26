@@ -40,8 +40,23 @@ The number of nodes in the tree is in the range [0, 3 * 104].
 class Solution {
 public:
     int maxPathSum(TreeNode* root) {
-
+        ans = INT_MIN;
+        helper(root);
+        return ans;
     }
+
+private:
+    int helper(TreeNode* root){
+        if(root == nullptr)
+            return 0;
+
+        int left = max(helper(root->left),0);
+        int right = max(helper(root->right), 0);
+        ans = max(ans, root->val + left + right);
+        return max(left, right) + root->val;
+    }
+
+    int ans;
 };
 
 int main(){
