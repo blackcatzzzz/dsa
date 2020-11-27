@@ -71,6 +71,53 @@ public:
     }
 };
 
+// time out
+class Solution_DFS {
+public:
+    int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
+        ans = INT_MAX;
+        _endWord = endWord;
+        _len = beginWord.size();
+        for(auto word : wordList){
+            for(int i = 0; i < _len; i++){
+                string newWord = word.substr(0, i) + "*" + word.substr(i + 1);
+                allComboDict[newWord].push_back(word);
+            }
+        }
+
+        dfs(beginWord, 1);
+
+        return ans == INT_MAX ? 0 : ans;
+    }
+
+private:
+    bool dfs(const string & beginWord, int length){
+        if(beginWord == _endWord){
+            ans = min(ans, length);
+            return true;
+        }
+
+        for(int i = 0; i < _len; i++){
+            string newWord = beginWord.substr(0, i) + "*" + beginWord.substr(i + 1);
+            for(auto adjacentWord : allComboDict[newWord]){
+                if(visited[adjacentWord])
+                    continue;
+                visited[adjacentWord] = true;
+                dfs(adjacentWord, length + 1);
+                visited[adjacentWord] = false;
+            }
+        }
+        return false;
+    }
+
+private:
+    int _len;
+    int ans;
+    string _endWord;
+    unordered_map<string, vector<string>> allComboDict;
+    unordered_map<string, bool> visited;
+};
+
 int main(){
     Solution S;
     vector<string> wordList = {"hot","dot","dog","lot","log","cog"};
