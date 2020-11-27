@@ -53,10 +53,11 @@ public:
             }
         }
 
-        unordered_map<string, bool> visited;
+        unordered_map<string, bool> pre_visited;
+        unordered_map<string, bool> next_visited;
         queue<pair<string, vector<string>>> q;
         bool find = false;
-
+        pre_visited[beginWord] = true;
         q.push(make_pair(beginWord, vector<string>(1, beginWord)));
         while(!q.empty() && !find){
             int size = q.size();
@@ -68,7 +69,7 @@ public:
                     string newWord = node.first.substr(0, i) + "*" + node.first.substr(i + 1);
                     vector<string> adjacentWords = allComboDict[newWord];
                     for(auto& adjacentWord : adjacentWords){
-                        if(visited[adjacentWord])
+                        if(pre_visited[adjacentWord])
                             continue;
                         
                         vector<string> path(node.second);
@@ -79,11 +80,16 @@ public:
                             continue;
                         }
 
-                        visited[adjacentWord] = true;
+                        next_visited[adjacentWord] = true;
                         q.push(make_pair(adjacentWord, path));
                     }
                 }
             }
+
+            for(auto it = next_visited.begin(); it != next_visited.end();it++)
+                pre_visited[it->first] = it->second;
+
+            next_visited.clear();
         }
 
         return ans;
@@ -148,5 +154,6 @@ int main(){
     string endWord = "cog";
     vector<string> wordList = {"hot","dot","dog","lot","log","cog"};
     Solution S;
-    printVectors(S.findLadders(beginWord, endWord, wordList));
+    vector<vector<string>> ans = S.findLadders(beginWord, endWord, wordList);
+    printVectors(ans);
 }
