@@ -49,7 +49,8 @@ private:
             return false;
 
         if(start == word.size() - 1)
-            return board[i][j] == word[start];
+            // return board[i][j] == word[start];
+             return true;
 
         used[i][j] = true;
         for(auto d: direction){

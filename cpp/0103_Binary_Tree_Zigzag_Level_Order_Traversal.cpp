@@ -29,7 +29,7 @@ return its zigzag level order traversal as:
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
-class Solution {
+class Solution_Stack {
 public:
     vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
         if(!root) return {};
@@ -64,6 +64,39 @@ public:
                 nodes.clear();
                 fromRight = !fromRight;
             }
+        }
+
+        return res;
+    }
+};
+
+class Solution {
+public:
+    vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
+        if(!root) return {};
+        vector<vector<int>> res;
+        bool leftOrder = true;
+        queue<TreeNode*> q;
+        q.push(root);
+        while(!q.empty()){
+            int count = q.size();
+            deque<int> deq;
+            while(count-- > 0){
+                TreeNode* node = q.front();
+                q.pop();
+                if(leftOrder)
+                    deq.push_back(node->val);
+                else
+                    deq.push_front(node->val);
+
+                if(node->left)
+                    q.push(node->left);
+                if(node->right)
+                    q.push(node->right);
+            }
+
+            leftOrder = !leftOrder;
+            res.push_back(vector<int>{deq.begin(), deq.end()});
         }
 
         return res;
