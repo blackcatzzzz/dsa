@@ -25,7 +25,7 @@ class Solution {
 public:
     bool isPalindrome(string s) {
         int lo = 0, hi = s.size() - 1;
-        while(lo < hi){
+        while(lo <= hi){
             while(lo < hi && !isalnum(s[lo]))
                 lo++;
 

@@ -63,7 +63,7 @@ private:
 
 int main(){
     Solution S;
-    string s = "aab";
+    string s = "ababababababababababababcbabababababababababababa";
     vector<vector<string>> res = S.partition(s);
     printVectors(res);
 }
