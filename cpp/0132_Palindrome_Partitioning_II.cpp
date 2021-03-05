@@ -29,6 +29,42 @@ s consists of lower-case English letters only.
 
 #include "common.h"
 
+class Solution {
+public:
+    int minCut(string s) {
+        int len = s.size();
+        if(len < 2)
+            return 0;
+
+        vector<int> dp(len, 0); // dp[i] = min(dp[j] + 1 for j in range(i) if s[j + 1:i] is palindrome)
+        for(int i = 0; i < len; i++)
+            dp[i] = i;
+
+        vector<vector<bool>> checkPalindrome(len ,vector<bool>(len , false));
+        for(int r = 0; r < len; r++){
+            for(int l = 0; l <= r; l++){
+                if(s[l] == s[r] && (r - l <= 2 || checkPalindrome[l + 1][r - 1]))
+                    checkPalindrome[l][r] = true;
+            }
+        }
+
+        for(int i = 1; i < len; i++){
+            for(int j = 0; j < i; j++){
+                if(checkPalindrome[0][i]) { // 本身是回文串
+                    dp[i] = 0;
+                    continue;
+                }
+
+                if(checkPalindrome[j+1][i]){
+                    dp[i] = min(dp[i], dp[j] + 1);
+                }
+            }
+        }
+
+        return dp[len - 1];
+    }
+};
+
 class Solution_Timeout {
 public:
     int minCut(string s) {
@@ -75,6 +111,6 @@ private:
 
 int main(){
     Solution S;
-    string s = "ababababababababababababcbabababababababababababa";
+    string s = "aab";
     cout << S.minCut(s);
 }
