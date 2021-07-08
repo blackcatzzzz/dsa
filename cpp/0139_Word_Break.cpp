@@ -26,7 +26,7 @@ Output: false
 #include "common.h"
 
 
-class Solution {
+class Solution_DP {
 public:
     bool wordBreak(string s, vector<string>& wordDict) {
         len = s.size();
