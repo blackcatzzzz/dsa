@@ -39,23 +39,37 @@ n == dungeon[i].length
 class Solution {
 public:
     int calculateMinimumHP(vector<vector<int>>& dungeon) {
-        int m = dungeon.size();
-        int n = dungeon[0].size();
+        m = dungeon.size();
+        n = dungeon[0].size();
+        memory = vector<vector<int>>(m , vector<int>(n, INT_MAX));
 
-        int minHealth = 0;
-        vector<vector<int>> dp(m, vector<int>(n, 0));
-        for(int i = 0; i < m; i++){
-            for(int j = 0; j < n; j++){
-            }
-        }
-
-        return minHealth > 0 ? 1 : (minHealth * -1) + 1;
+        return dfs(dungeon, 0, 0);
     }
+
+    int dfs(vector<vector<int>>& dungenon, int r, int c){
+        if(r >= m || r < 0 || c >= n || c < 0)
+            return INT_MAX;
+
+        if(memory[r][c] != INT_MAX)
+            return memory[r][c];
+            
+        if(r == m - 1 && c == n - 1){
+            return max(1 - dungenon[r][c], 1);
+        }
+            
+        memory[r][c] = max(min(dfs(dungenon, r, c + 1), dfs(dungenon, r + 1, c)) - dungenon[r][c], 1);
+        return memory[r][c];
+    }
+
+private:
+    int m = 0, n = 0;
+    vector<vector<int>> memory;
 };
 
 
 int main(){
     Solution S;
-    vector<vector<int>> dungeon = {{-2,-3,3},{-5,-10,1},{10,30,-5}};
+    vector<vector<int>> dungeon = {{-2,-3,3},{-5,-10,1},{10,30,-5}}; // 7
+    // vector<vector<int>> dungeon = {{0,-5},{0,0}}; // 1
     cout << S.calculateMinimumHP(dungeon);
 }
