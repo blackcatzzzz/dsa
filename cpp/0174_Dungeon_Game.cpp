@@ -36,7 +36,32 @@ n == dungeon[i].length
 
 #include "common.h"
 
+// dp
 class Solution {
+public:
+    int calculateMinimumHP(vector<vector<int>>& dungeon) {
+        int m = dungeon.size();
+        int n = dungeon[0].size();
+        vector<vector<int>> dp(m , vector<int>(n, INT_MAX));
+        dp[m - 1][n - 1] = max(1 - dungeon[m - 1][n - 1], 1);
+
+        for(int i = m - 2, j = n - 1; i >= 0; i--)
+            dp[i][j] = max(dp[i + 1][j] - dungeon[i][j], 1);
+
+        for(int i = m - 1, j = n - 2; j >= 0; j--)
+            dp[i][j] = max(dp[i][j + 1] - dungeon[i][j], 1);
+
+        for(int i = m - 2; i >= 0; i--){
+            for(int j = n - 2; j >=0; j--)
+                dp[i][j] = max(min(dp[i + 1][j], dp[i][j + 1]) -  dungeon[i][j], 1);
+        }
+
+        return dp[0][0];
+    }
+};
+
+// backtrack + memory
+class Solution1 {
 public:
     int calculateMinimumHP(vector<vector<int>>& dungeon) {
         m = dungeon.size();
@@ -52,7 +77,7 @@ public:
 
         if(memory[r][c] != INT_MAX)
             return memory[r][c];
-            
+
         if(r == m - 1 && c == n - 1){
             return max(1 - dungenon[r][c], 1);
         }
